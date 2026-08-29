@@ -1,0 +1,51 @@
+{
+  "idea": "For our 45-minute afterschool club, grades 6-8, teach a single-session Arduino stoplight with a pushbutton, using kits we already own.",
+  "assessment": {
+    "summary": "A single-session Arduino stoplight with a pushbutton for grades 6-8 using existing kits is a well-matched, low-risk afterschool project with clear grade fit, safe 5V electronics, and strong AI-authoring value. The main problem is scope: building and coding three LEDs plus a button input from scratch in 45 minutes is unrealistic unless the session is trimmed or students have prior Arduino experience.",
+    "verdict": "feasible_with_changes",
+    "checks": {
+      "grade_level_fit": {
+        "pass": true,
+        "notes": "Grades 6-8 explicitly stated. Breadboarding LEDs with current-limiting resistors and writing simple digitalWrite/delay and digitalRead logic is squarely within middle-school reach, especially with a wiring diagram and starter sketch."
+      },
+      "materials_feasibility": {
+        "pass": true,
+        "notes": "Prompter states kits are already owned, and standard Arduino starter kits contain everything needed (Uno-class board, breadboard, jumpers, red/yellow/green LEDs, 220-330 ohm resistors, tactile pushbutton, USB cable). Not stated: how many kits exist relative to student count, and whether laptops with the Arduino IDE (or a web editor with driver access) are available and pre-installed."
+      },
+      "instructor_capability": {
+        "pass": true,
+        "notes": "No specialist expertise required. A non-specialist can run this after building the circuit once themselves and rehearsing the upload workflow; the only real prep burden is knowing common failure modes (reversed LED polarity, wrong COM port, missing pull-down/INPUT_PULLUP on the button)."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "High value. Claude can author the starter sketch, a commented state-machine version, wiring diagrams described step by step, a debugging cheat sheet, extension challenges (pedestrian crossing, blinking yellow, timing changes), and an exit-ticket worksheet."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "45 minutes is too tight for the full arc as described if students start from zero: kit distribution, breadboarding four components, IDE setup/upload, plus button logic and debugging typically runs 75-90 minutes with grades 6-8. Prior Arduino experience of the group was not stated, which is the deciding fact."
+      },
+      "safety": {
+        "pass": true,
+        "notes": "5V USB-powered, low-current circuit with no heat, chemicals, or sharp tools. Only routine cautions: no shorting the 5V rail to ground, always use a current-limiting resistor with each LED, unplug USB before rewiring."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "Genuine build with real decision points (LED sequencing, timing values, how the button interrupts the cycle) and authentic debugging. Risk of collapsing into recipe-following if the 45-minute crunch forces a fully pre-written sketch and pre-wired board; preserve at least one open design choice for students."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "Have these students used Arduino before (uploaded a sketch, built a breadboard circuit), or is this their first exposure? This determines whether 45 minutes is viable.",
+      "How many working kits are available and what is the expected student count / students per kit?",
+      "Are laptops available with the Arduino IDE (or Arduino Cloud Editor plus USB drivers) already installed and tested, or does setup have to happen during the session?",
+      "Does the owned kit specifically include a tactile pushbutton and 220-330 ohm resistors, or will those need to be sourced?"
+    ],
+    "suggested_changes": [
+      "Trim the single 45-minute session to a 3-LED stoplight cycle only (no button), and move the pushbutton crosswalk feature to a second session or an extension challenge for fast finishers.",
+      "Alternatively, keep the pushbutton but pre-wire or pre-stage the breadboards (LEDs and resistors already placed) so class time goes to coding and testing rather than assembly.",
+      "Pre-install and test the Arduino IDE on all laptops before the session, and verify one board uploads successfully on the actual club machines.",
+      "Provide a working starter sketch that blinks a single LED, and have students extend it to three LEDs with their own chosen timings, so productive struggle survives the shortened scope.",
+      "Confirm kit count and set a fixed pairing plan (2 students per kit maximum) so every student gets hands on the breadboard."
+    ]
+  }
+}

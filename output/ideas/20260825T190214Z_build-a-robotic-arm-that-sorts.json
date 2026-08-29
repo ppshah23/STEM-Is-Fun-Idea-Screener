@@ -1,0 +1,55 @@
+{
+  "idea": "Build a robotic arm that sorts LEGO bricks by color using a webcam and a machine learning model, for our summer coding camp.",
+  "assessment": {
+    "summary": "A webcam + ML color-sorting robotic arm is an appealing, genuinely buildable project with strong AI-authoring value, but the prompter never stated a grade band, session count, or what hardware (arm, servos, controller, laptops) the camp already owns. Scope is also likely too large for a single session as written.",
+    "verdict": "needs_more_info",
+    "checks": {
+      "grade_level_fit": {
+        "pass": false,
+        "notes": "No age or grade band stated; 'summer coding camp' implies prior coding exposure but spans roughly grades 3-12, and the achievable version differs enormously across that range (block-based color-threshold sorting for upper elementary vs. training a small classifier in Python for high school). Cannot judge until the prompter names a grade band."
+      },
+      "materials_feasibility": {
+        "pass": false,
+        "notes": "Plausible affordable paths exist (LEGO SPIKE Prime/EV3 with color sensor, or a hobby 4-DOF servo arm kit ~$60-120 plus a $10-25 USB webcam and Arduino/Raspberry Pi, or a laptop-only Teachable Machine + serial link). But the prompter did not say whether the camp owns any robotic arm, microcontroller, webcam, or per-student laptops capable of running a webcam ML model. A per-team arm is the single largest cost driver and is unstated."
+      },
+      "instructor_capability": {
+        "pass": false,
+        "notes": "A non-specialist can teach the Teachable Machine / color-threshold version with prep. But if the intent is training a real CNN, or debugging servo inverse kinematics and serial communication live, that needs an instructor comfortable with Python, servo calibration, and camera lighting troubleshooting. Passability depends entirely on which version is chosen, which the idea doesn't specify. No certified/licensed expertise is required either way, so this becomes a pass once scope is pinned down."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "Very high. Claude can author servo control and OpenCV/Teachable Machine starter code, HSV color-threshold explanations, a 'what is training data' scaffold, gripper-position calibration worksheets, debugging decision trees for misclassified bricks, and tiered extension challenges (sort by size, handle two colors that confuse the model)."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "Number of sessions and session length are not stated. Full arm assembly + camera setup + model training + integration is realistically 4-6 sessions of 90 minutes; it will not fit a single session. If the camp is a one-week half-day camp it fits well, but that must be confirmed."
+      },
+      "safety": {
+        "pass": true,
+        "notes": "Low risk at low-voltage USB/5V servo power with no mains wiring, no heat, no chemicals. Standard mitigations only: keep fingers and hair clear of the gripper and arm sweep path, secure the base so the arm cannot tip, supervise any soldering (or use pre-soldered/screw-terminal connections to avoid it entirely), and note the small-parts choking hazard if the band is below grade 3."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "Strong fit. Real decision points abound: which color features to use, how many training images per color, where to place the pick-up zone, how to handle lighting changes and shiny brick glare. Misclassification gives immediate, visible feedback that drives iteration rather than recipe-following."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "What grade/age band is the summer camp serving (e.g. grades 4-6 vs. 9-12)?",
+      "How many sessions is the camp, and how long is each session?",
+      "Does the program already own robotic arms or arm kits (LEGO SPIKE/EV3, or hobby servo arms), and how many, or must they be purchased?",
+      "Are there per-team laptops that can run a webcam-based ML tool, and does the venue Wi-Fi allow browser tools like Teachable Machine?",
+      "What is the per-team or total materials budget?",
+      "What programming language/environment does the camp already use (Scratch/block-based, MicroPython, Python)?",
+      "How many students per team, and how comfortable is the assigned instructor with Python and servo hardware?"
+    ],
+    "suggested_changes": [
+      "State the grade band and session count; if it is a single session, cut to a pre-assembled arm plus a Teachable Machine color model so students only train and tune, not build.",
+      "For grades 4-8, use LEGO SPIKE Prime/EV3 with a pre-built arm design and Teachable Machine (or the built-in color sensor as a fallback) instead of a from-scratch servo arm and custom classifier.",
+      "For grades 9-12, keep the servo arm + webcam + Python path but supply a pre-assembled and pre-calibrated arm so class time goes to the vision and sorting logic rather than mechanical assembly.",
+      "Pre-solder or use screw-terminal/Dupont connections on all servo wiring so no soldering iron is needed.",
+      "Add a fixed light source or lamp shroud over the pick-up zone, since inconsistent lighting is the most common cause of a color model failing mid-session.",
+      "Define a concrete success criterion (e.g. 'sorts 8 of 10 bricks into two bins correctly') so teams have a target and an obvious iteration loop."
+    ]
+  }
+}

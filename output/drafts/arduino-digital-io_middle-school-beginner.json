@@ -1,0 +1,636 @@
+{
+  "analysis": {
+    "learning_objective": "Students can write and explain an Arduino program that reads a digital input (a button) and controls a digital output (an LED) based on that input.",
+    "gaps": [
+      "Course is written for grades 9-12; persona is grades 6-8 with no programming or electronics background, so terms like 'microcontroller', 'operating system', 'pull-up resistor', and 'current-limiting resistor' are introduced without definition or concrete analogy.",
+      "Content assumes familiarity with text-based C/C++ syntax (functions, semicolons, if statements, HIGH/LOW constants) but the persona has only touched block-based coding once or twice; there is no bridge from Scratch-style blocks to Arduino code.",
+      "No session structure or pacing: the four sections form one continuous flow, but the class meets in 45-minute blocks and needs clear per-session stopping points with a working artifact at each stop.",
+      "INPUT_PULLUP introduces inverted logic (unpressed = HIGH, pressed = LOW) as a bare fact; for beginners this is the single most common source of confusion and is presented with no explanation, prediction step, or way to verify it.",
+      "Content is entirely expository prose with no build steps, wiring diagrams, or hands-on tasks, despite the persona's stated interest in building things with their hands.",
+      "No accommodation for groups of 2-3 sharing one kit \u2014 no role structure, so one student typically holds the board and the others disengage.",
+      "Persona interests (video games, robots) are never connected to the material; the button-LED program is framed abstractly rather than as a game controller or robot component.",
+      "The 'Blink' program is described but delay() and loop() are never explained as concepts, so students can copy it without being able to explain it \u2014 which the learning objective explicitly requires.",
+      "No troubleshooting or debugging guidance, though beginners on shared hardware will hit backwards LEDs, loose jumper wires, wrong pin numbers, and failed uploads within the first session.",
+      "Assessment is absent: nothing checks the 'explain' half of the learning objective."
+    ],
+    "required_changes": [
+      "Rewrite all four sections at a grade 6-8 reading level, defining every technical term on first use with a concrete analogy (e.g., microcontroller as 'a tiny brain that only knows one job and does it over and over').",
+      "Add a short opening bridge section mapping Scratch concepts the students may have seen ('forever' block, 'if' block, 'wait' block) onto loop(), if, and delay() so text code feels like a translation rather than a new language.",
+      "Split the course into three 45-minute sessions, each ending with a circuit that visibly works: (1) LED blinks, (2) button press prints/lights up, (3) button controls LED.",
+      "Convert each section into a build-then-explain sequence: students wire the circuit and run provided code first, then answer a short 'what did it do and why' prompt before any new concept is introduced.",
+      "Add labeled wiring diagrams or photos for every circuit \u2014 LED with resistor, button to pin, and the combined circuit \u2014 since middle schoolers cannot reliably build from prose descriptions.",
+      "Teach INPUT_PULLUP with an explicit prediction-and-test step: have students guess what digitalRead returns before and after pressing, then print the value to the Serial Monitor to confirm the inverted logic themselves.",
+      "Provide complete, runnable starter code for each session with fill-in-the-blank sections rather than blank-slate coding, keeping the reasoning work (which pin, HIGH or LOW, which comparison) with the student.",
+      "Reframe the final project in persona-relevant terms: present the button-LED program as 'a controller button that makes something happen' and end with one stretch prompt (a robot's headlight, a game's fire button).",
+      "Assign rotating group roles for the 2-3 student teams \u2014 Wirer, Coder, Checker \u2014 with a required rotation between sessions so every student wires and codes at least once.",
+      "Add a one-page troubleshooting checklist covering the most common beginner failures: LED inserted backwards, resistor missing, wrong pin number in code, board not selected in the IDE, loose breadboard connections.",
+      "Add a brief exit check at the end of session 3 in which each student explains, in their own words or by annotating the code line by line, how the program gets from a button press to a lit LED \u2014 this directly assesses the 'explain' clause of the objective.",
+      "State the current-limiting resistor as a required, non-optional step wherever an LED is wired, not as an incidental mention, and note that a bare LED across 5V will burn out."
+    ],
+    "preserve": [
+      "The learning objective, unchanged: read a digital input and control a digital output based on it.",
+      "The four-section conceptual progression (what a microcontroller is \u2192 output \u2192 input \u2192 combining them); it is already the correct order and does not need reorganizing.",
+      "The choice of INPUT_PULLUP over an external pull-down resistor \u2014 it reduces wiring complexity, which suits shared kits and short sessions, even though it needs better explanation.",
+      "The Blink program as the first hands-on activity; it is the right low-stakes entry point and already gives immediate visible feedback.",
+      "The current-limiting resistor requirement for the LED circuit (safety/hardware-critical).",
+      "The framing in section 4 that connecting input to output is the foundation of every more complex project \u2014 this motivates the objective well and is already age-appropriate in spirit.",
+      "The use of a real Arduino board rather than a simulator, given the persona's interest in building with their hands."
+    ],
+    "pedagogy_conflicts": []
+  },
+  "lesson_plan": {
+    "learning_objective": "Students can write and explain an Arduino program that reads a digital input (a button) and controls a digital output (an LED) based on that input.",
+    "lessons": [
+      {
+        "order": 1,
+        "title": "From Scratch Blocks to Arduino Code",
+        "objective": "Students can translate familiar Scratch blocks (forever, when green flag clicked, wait, if/then, set) into their Arduino code equivalents and state the two typing rules (semicolons and curly braces) they will use in every sketch this course.",
+        "materials": [
+          "Scratch-to-Arduino translation table handout (one per student, kept all three sessions)",
+          "Session worksheet with role box at the top",
+          "Slide or whiteboard showing a sample sketch with setup() and loop()",
+          "Pencils",
+          "Optional: a computer displaying a Scratch project for comparison"
+        ],
+        "activity": "(0-2 min) Show a short Scratch script on screen \u2014 a cat that moves, waits, and repeats. Ask who has used Scratch. (2-6 min) Walk the translation table row by row, pairing each Scratch block with its Arduino line: forever \u2192 void loop(), green flag \u2192 void setup(), wait 1 seconds \u2192 delay(1000), if/then \u2192 if(){}, set \u2192 digitalWrite(). Emphasize this is the same idea in a different outfit. (6-8 min) Introduce the two typing rules: semicolon ends a command; curly braces are the C-shaped hug that says what belongs to the block. Define 'sketch'. (8-9 min) Spoken quick check in groups: what does delay(200) do? delay(3000)? (9-10 min) Assign teams of 2-3 and have each student write their Session 1 role (Wirer, Coder, Checker) at the top of the worksheet, plus the rotation plan for Sessions 2 and 3.",
+        "assessment": "Instructor circulates during the spoken quick check and listens for each group correctly converting milliseconds to seconds (200 ms = one-fifth of a second, 3000 ms = 3 seconds). Every student must have a role written on their worksheet before the lesson ends.",
+        "productive_struggle_checkpoint": "During the delay() quick check, do not supply the millisecond-to-second conversion. Let groups reason from the single fact that delay(1000) = 1 second and argue it out among themselves for a full minute before the instructor confirms or redirects with a question ('If 1000 is one second, is 200 more or less than a second?')."
+      },
+      {
+        "order": 2,
+        "title": "What Is a Microcontroller? Power It Up First",
+        "objective": "Students can explain, using their own analogy, that an Arduino holds one program with no operating system, and can name one input and one output on a familiar device.",
+        "materials": [
+          "Arduino board and USB cable (one per team)",
+          "Laptop or computer (one per team)",
+          "Worksheet with 'What did it do, and why?' prompt",
+          "Translation table from Lesson 1"
+        ],
+        "activity": "(0-5 min) Build first: teams plug the Arduino into the USB cable and watch the board. Green power light comes on immediately; a second light may flash. Unplug. Each student writes one sentence describing what happened the instant power arrived. No explanation is given yet. (5-8 min) Groups share their sentences aloud; instructor collects the observation that there was no waiting, no startup screen. (8-16 min) Now the explanation: define microcontroller as a tiny brain that knows one job and does it forever; define operating system as a manager program that decides which app gets a turn; contrast laptop vs. Arduino, and game console vs. single-game handheld toy. (16-20 min) Introduce the input/output framing \u2014 a game controller is full of inputs, a robot is full of outputs \u2014 and preview that the course ends with the piece connecting one to the other. (20-22 min) Group quick check: name one input and one output on a game controller you have used, and identify which part is the 'tiny brain.'",
+        "assessment": "Each group reports one input and one output from a game controller and points to where the tiny brain would sit. Instructor checks the written one-sentence observation from the power-up step for the idea that the program started instantly with no startup process.",
+        "productive_struggle_checkpoint": "The power-up observation step. Students will want to be told why nothing happened and why there was no startup screen. Withhold the microcontroller/operating-system explanation entirely until every team has written and shared its own sentence."
+      },
+      {
+        "order": 3,
+        "title": "Digital Output \u2014 Make an LED Blink",
+        "objective": "Students can wire an LED with a current-limiting resistor and explain how digitalWrite(HIGH/LOW), delay(), and loop() combine to make it blink.",
+        "materials": [
+          "Arduino board, USB cable, breadboard, jumper wires (one kit per team)",
+          "LED (plus spares)",
+          "220\u03a9 resistor (red-red-brown)",
+          "Computer with Arduino IDE installed",
+          "Session 1 wiring diagram handout",
+          "Blink starter code (printed or on shared drive)",
+          "Exit ticket slips"
+        ],
+        "activity": "(0-5 min) STOP block read aloud as a class: an LED always needs a resistor; a bare LED across 5V is a dead LED in about a second. Explain the narrow-straw analogy and LED polarity (long leg = positive toward the pin, short leg toward GND; backwards = no light, no damage). Checker's first job is to point at the resistor and say 'resistor is in.' (5-18 min) Build: Wirer builds from the numbered steps while Checker reads each step aloud and traces the path with a finger. Instructor verifies the resistor is in the path for every team before power is applied. (18-25 min) Coder types the Blink sketch and uploads. LED should blink about once per second. (25-30 min) 'What did it do, and why?' \u2014 in groups, answer: how many times does the code say to turn the light on, versus how many times it actually turns on, and what in the code explains the gap. (30-38 min) Explanation: pin as a doorway, pinMode(13, OUTPUT) running once in setup(), digitalWrite HIGH = 5V and LOW = 0V, 'digital' as a two-choice light switch, loop() as the forever block, and delay() as the reason the blink is visible at all. (38-43 min) Your turn \u2014 change one thing: blink twice as fast; make a quick-quick-long signal; move the LED to pin 9 and find both things that must change. (43-45 min) Written exit ticket, then role rotation is recorded for Session 2.",
+        "assessment": "Instructor inspects each team's circuit for the resistor and correct LED polarity before power is applied, and confirms each team achieves a visibly blinking LED. Written exit ticket: 'In your own words, why does the LED keep blinking when the code only says turn on one time?' \u2014 a correct answer references loop() repeating from the top.",
+        "productive_struggle_checkpoint": "The 'Move the LED to pin 9 \u2014 two things must change' challenge. Students will find the digitalWrite line quickly and miss pinMode. Do not name the second change; ask instead, 'Which line told the board what pin 13's job was, and does that line still say the right pin?' Give teams at least three minutes on their own first."
+      },
+      {
+        "order": 4,
+        "title": "Checkpoint \u2014 Reading and Predicting Output Code",
+        "objective": "Students can read an unfamiliar blink-style sketch and predict its behavior, demonstrating they can explain digitalWrite, delay(), setup(), and loop() before new input concepts are introduced.",
+        "materials": [
+          "Printed 'predict the behavior' worksheet with 3 short sketches (varied delays, an LED left permanently on, a sketch with digitalWrite in setup() only)",
+          "Assembled LED circuits from Lesson 3 (or one demo circuit at the front)",
+          "Arduino boards and computers for the verification step",
+          "Whiteboard for tallying class predictions"
+        ],
+        "activity": "(0-3 min) Restate the objective: today we prove we can read code, not just run it. (3-13 min) Individually, students read three short sketches and write a one-line prediction for each: what does the LED do? Sketch A has delay(50) both ways; Sketch B never turns the LED off; Sketch C puts digitalWrite in setup() instead of loop(). (13-20 min) Groups compare predictions and must reach one agreed answer per sketch, with a stated reason. Disagreements are resolved by argument, not by running the code. (20-32 min) Teams upload and test each sketch on their real circuit, one at a time, and mark whether their prediction held. Sketch A should surprise them \u2014 50 ms is too fast for the eye to fully resolve, connecting back to why delay() exists. (32-40 min) Whole-class discussion: tally which sketches were predicted correctly; surface the misconception that setup() code repeats. Instructor logs any group that still cannot explain loop() and pulls them for a short reteach. (40-45 min) Quick partner drill: each student explains one line of the Blink sketch to a partner without looking at the comments.",
+        "assessment": "Worksheet predictions are collected and scored informally: a student meets the objective if at least two of three predictions are correct AND the reason given for the setup()-only sketch mentions that setup() runs one time. Instructor notes any student who cannot verbally explain a single line during the partner drill.",
+        "productive_struggle_checkpoint": "The group-agreement phase before any code is uploaded. Teams must commit to a written prediction with a reason before they are allowed to test. Do not confirm or deny predictions during this phase, even when asked directly \u2014 the surprise from Sketch A is the teaching moment and is lost if the answer is given first."
+      },
+      {
+        "order": 5,
+        "title": "Digital Input \u2014 Reading a Button",
+        "objective": "Students can wire a button with INPUT_PULLUP and explain why an unpressed button reads HIGH (1) and a pressed button reads LOW (0).",
+        "materials": [
+          "Arduino board, USB cable, breadboard, jumper wires (one kit per team)",
+          "Pushbutton",
+          "Computer with Arduino IDE",
+          "Session 2 wiring diagram handout",
+          "Prediction slip (unpressed = ___, pressed = ___)",
+          "Button-read starter code and fill-in-the-blank extension code",
+          "Exit ticket slips"
+        ],
+        "activity": "(0-4 min) Frame the shift: last session the pin was a sender, today it becomes a listener. An input is information coming in \u2014 this is the half of a game controller that notices your thumb. Note that the LED circuit from Lesson 3 stays on the board. (4-14 min) Build: new Wirer pushes the button across the center gap, wires pin 2 to one leg and GND to the leg on the opposite side. New Checker presses the button to confirm the click; nothing should light up. Only two wires, no external resistor. (14-18 min) MANDATORY PREDICTION: each team writes down, on a slip handed to the instructor, what the Serial Monitor will show when unpressed and when pressed. No team may upload until the slip is turned in. (18-26 min) Coder uploads the digitalRead sketch and opens the Serial Monitor. Teams hold the button, release, and watch the numbers. Instructor normalizes wrong guesses out loud \u2014 most teams get this backwards. (26-36 min) Explanation: a floating listening pin is a microphone in an empty room; INPUT_PULLUP switches on an internal pull-up resistor that gently holds the pin at 5V like a spring-loaded door that swings back closed; pressing connects the pin straight to GND, which wins. Define digitalRead, Serial Monitor, int, and the labeled-box idea of buttonState. Explain why no external resistor is needed: fewer wires, fewer failure points. (36-40 min) 'Say it back' \u2014 every team member states aloud: 'Not pressed reads ___ because ___. Pressed reads ___ because ___.' (40-44 min) Fill-in-the-blank extension: make the Serial Monitor print PRESSED and a message of the team's choosing, using ==. Note the one-equals versus two-equals bug. (44-45 min) Written exit ticket and role rotation.",
+        "assessment": "Instructor collects prediction slips (participation, not correctness) and then listens to every student's 'say it back' statement, requiring both the value and the reason. Working fill-in-the-blank code printing PRESSED on press is checked at each station. Written exit ticket: 'Why does an unpressed button read HIGH instead of LOW?'",
+        "productive_struggle_checkpoint": "Between the prediction slip and the explanation. When the numbers come out inverted, students will immediately ask why. Do not explain the pull-up resistor until every team has observed both states and attempted their own reason out loud. Redirect with 'What is the pin connected to when you are NOT pressing?' rather than answering."
+      },
+      {
+        "order": 6,
+        "title": "Put Them Together \u2014 Build a Controller Button",
+        "objective": "Students can complete and upload a sketch that reads the button with digitalRead and drives the LED with digitalWrite through an if/else, producing a working press-to-light controller button.",
+        "materials": [
+          "Arduino board, USB cable, breadboard, jumper wires (one kit per team)",
+          "LED, 220\u03a9 resistor, pushbutton (both circuits from Lessons 3 and 5, kept assembled)",
+          "Computer with Arduino IDE",
+          "Session 3 combined wiring diagram handout",
+          "Fill-in-the-blank final code (three blanks)",
+          "One-page troubleshooting checklist per team",
+          "Spare LEDs and jumper wires"
+        ],
+        "activity": "(0-4 min) Frame it: Session 1 gave the board a way to act on the world, Session 2 gave it a way to notice you. Today they connect \u2014 read the input, decide, drive the output \u2014 and that shape is behind every robot bumper, fire button, and vending machine. (4-16 min) Build the shared GND rail: one jumper from Arduino GND to a long rail row; LED short leg to that rail; one side of the button to that same rail; confirm LED long leg \u2192 resistor \u2192 pin 13 and button's other side \u2192 pin 2. New Checker traces BOTH paths with a finger and says 'resistor is in' out loud before anything is uploaded. (16-26 min) Fill in the three blanks \u2014 pinMode direction for pin 13, which value means PRESSED, and HIGH or LOW for lights-on \u2014 then upload and test: press, release, press, release. (26-32 min) Debug using the troubleshooting checklist in order. Teams whose LED behaves backwards must state aloud what an unpressed button reads before changing anything. (32-40 min) 'What did it do, and why?': discuss the absence of delay() \u2014 the board runs read/decide/write thousands of times per second, like a controller polling your thumb \u2014 and the role of if/else as the place where deciding lives. (40-45 min) Teams confirm a working circuit and prepare their annotated code for the next lesson's exit check.",
+        "assessment": "Instructor verifies at each station that pressing the button lights the LED and releasing turns it off, and that the resistor is still in the LED path. Teams that arrive at a working build without help from the instructor are noted; teams that used the checklist must state which numbered item fixed their problem.",
+        "productive_struggle_checkpoint": "The three blanks and the first round of debugging. Do not fill in a blank for any team and do not point at a wire. When a team is stuck, hand them the troubleshooting checklist and require them to work it in order, out loud, Checker leading \u2014 'pin 13, to resistor, to LED long leg...' Offer direct help only after a team has worked the relevant checklist section and can name what they already ruled out."
+      },
+      {
+        "order": 7,
+        "title": "Exit Check and Stretch Challenges",
+        "objective": "Students can individually annotate every line of the finished sketch and give a spoken walkthrough of what happens between the button press and the light turning on, using the terms pin, digitalRead, HIGH/LOW, if, and digitalWrite.",
+        "materials": [
+          "Printed copy of each team's finished sketch, one per student",
+          "Pens for annotation",
+          "Assembled button-and-LED circuits from Lesson 6",
+          "Computers with Arduino IDE",
+          "Stretch challenge card listing the four options",
+          "Troubleshooting checklist"
+        ],
+        "activity": "(0-3 min) Restate the course objective and explain the exit check standard: it is not enough to have a working light \u2014 each person must be able to explain it. (3-15 min) INDIVIDUAL, silent: every student writes a note beside every line of the finished code explaining what that line does in their own words. Teammates may not confer during this phase. (15-28 min) Verbal walkthrough: each student, in turn within their group, answers without reading from their notes \u2014 'Walk me through what happens between the moment my finger presses the button and the moment the light turns on.' The answer must mention the pin, digitalRead, HIGH or LOW, the if, and digitalWrite. Teammates who hear a gap ask a question rather than supplying the answer. Instructor rotates and listens to at least one walkthrough per group, spot-checking the weaker explainers. (28-42 min) Stretch challenges, gated behind a passed exit check: teams pick ONE \u2014 robot headlight (LED stays on 3 seconds after a quick press), toggle switch (press on, press off, board must remember), fire button (three fast flashes per press), or design-your-own two buttons and two LEDs with a diagram. Students who did not pass the exit check re-annotate and re-attempt the walkthrough with the instructor. (42-45 min) Close: each team demonstrates its stretch build or its best attempt, and names the one thing it would try next.",
+        "assessment": "Primary summative check for the course objective: the annotated code (every line noted in the student's own words) plus the spoken walkthrough containing all five required terms \u2014 pin, digitalRead, HIGH/LOW, if, digitalWrite. Students who miss a term are re-questioned on that step only and given a second attempt. Stretch challenge success is bonus, not part of the objective.",
+        "productive_struggle_checkpoint": "The toggle-switch and robot-headlight stretch challenges. Both require an idea students have not been given \u2014 storing state across loops, or the consequence of delay() blocking the loop. Offer only the hints already on the card ('what did delay() do in Session 1?' / 'the board needs to remember what it did last time') and let teams sit with it for at least eight minutes before offering any further nudge, which should itself be a question."
+      }
+    ]
+  },
+  "slide_outline": {
+    "lesson_title": "Arduino: Button In, Light Out \u2014 Build Your Own Controller Button (7-Lesson Unit)",
+    "slides": [
+      {
+        "order": 1,
+        "type": "hook",
+        "title": "You Already Know How to Code",
+        "content": "This cat moves, waits, and repeats forever.\nSo does an Arduino.",
+        "speaker_notes": "Open with the Scratch script projected: when green flag clicked \u2192 forever \u2192 move 10 steps \u2192 wait 1 seconds. Play it. Ask by show of hands: who has used Scratch? Tell them the honest truth up front \u2014 they are not starting from zero today, they are changing outfits. The same five ideas they already used in Scratch are the same five ideas in Arduino code; only the typing changes. VISUAL: live Scratch project or a clean screenshot of the block stack, large enough to read from the back."
+      },
+      {
+        "order": 2,
+        "type": "concept",
+        "title": "forever \u2192 void loop()",
+        "content": "Scratch: forever\nArduino: void loop() { }\nRuns again and again, top to bottom, until you unplug it.",
+        "speaker_notes": "Show the forever block and the loop() function side by side. Stress: nobody has to tell loop() to run again \u2014 that is its whole personality. This one idea is going to explain almost every 'why did it do that?' question for the next six lessons, so plant it now. VISUAL: split slide, Scratch forever block on the left, void loop(){} on the right, arrow curving from the bottom of loop back to the top."
+      },
+      {
+        "order": 3,
+        "type": "concept",
+        "title": "green flag \u2192 void setup()",
+        "content": "Scratch: when green flag clicked\nArduino: void setup() { }\nRuns ONE time, at the very start.",
+        "speaker_notes": "The green flag fires once when you start the project \u2014 setup() fires once when the board gets power. Say the word 'once' out loud twice. Foreshadow: in a couple of sessions we are going to meet a sketch where someone put the wrong thing in setup(), and the whole class is going to argue about it. VISUAL: same split layout as previous slide; add a small '\u00d71' badge on setup() and a '\u221e' badge on loop() to build the contrast."
+      },
+      {
+        "order": 4,
+        "type": "concept",
+        "title": "wait 1 seconds \u2192 delay(1000)",
+        "content": "Scratch: wait 1 seconds\nArduino: delay(1000);\n1000 = one second's worth of milliseconds.",
+        "speaker_notes": "This is the only conversion fact you hand them today: delay(1000) is one second. Do NOT extend it to other numbers \u2014 they will do that work themselves in a few minutes. Mention that the number in the brackets is in milliseconds, and let that sit. VISUAL: Scratch wait block next to delay(1000); with the 1000 circled and labelled 'milliseconds'."
+      },
+      {
+        "order": 5,
+        "type": "concept",
+        "title": "if/then and set \u2192 if() { } and digitalWrite()",
+        "content": "Scratch: if <> then \u2192 Arduino: if ( ) { }\nScratch: set [ ] to [ ] \u2192 Arduino: digitalWrite(13, HIGH);",
+        "speaker_notes": "if/then is where deciding happens in both languages. 'set' is where you change something in the world \u2014 in Arduino, digitalWrite is how you set a pin. Don't over-explain digitalWrite yet; they meet it properly in Lesson 3. Tell them to fill these rows into their translation table now, and to keep that handout for all three sessions \u2014 they will use it every single day. VISUAL: the two remaining rows of the translation table, highlighted."
+      },
+      {
+        "order": 6,
+        "type": "concept",
+        "title": "Typing Rule 1: The Semicolon Ends a Command",
+        "content": "digitalWrite(13, HIGH);\ndelay(1000);\nOne finished instruction = one semicolon.",
+        "speaker_notes": "In Scratch, blocks snap and the shape tells the computer where a command ends. In text code, nothing snaps \u2014 the semicolon is how you say 'I'm done with that sentence.' Compare it to a full stop. Warn them cheerfully: forgetting one is the single most common error message they will see this course, and it is not a sign they are bad at this. VISUAL: a line of code with the semicolon enlarged and coloured; beside it, a sentence of English with a full stop enlarged the same way."
+      },
+      {
+        "order": 7,
+        "type": "concept",
+        "title": "Typing Rule 2: Curly Braces Are a C-Shaped Hug",
+        "content": "void loop() {\n   these lines belong to loop\n}",
+        "speaker_notes": "In Scratch, the C-shaped block physically wraps the blocks inside it. Curly braces are exactly that wrap, drawn with punctuation. Everything between { and } belongs to that block. Braces always come in pairs \u2014 open one, you owe one. VISUAL: a Scratch forever block visually morphing into a pair of curly braces around the same two lines of code; animate or show as two panels."
+      },
+      {
+        "order": 8,
+        "type": "concept",
+        "title": "The Word for the Whole Thing: a Sketch",
+        "content": "A sketch = one Arduino program.\nEvery sketch has a setup() and a loop().",
+        "speaker_notes": "Define the vocabulary now so it's not a mystery later: Arduino people call a program a 'sketch'. Every sketch this course will have exactly two parts \u2014 the once part and the forever part. If they can find those two words on any screen, they can find their footing in any sketch. VISUAL: skeleton sketch on screen \u2014 void setup(){} above void loop(){} \u2014 with the two regions shaded different colours and labelled 'runs once' / 'runs forever'."
+      },
+      {
+        "order": 9,
+        "type": "activity_bridge",
+        "title": "Quick Check: You Figure It Out",
+        "content": "You know one fact: delay(1000) = 1 second.\nSo what does delay(200) do?\nWhat about delay(3000)?",
+        "speaker_notes": "PRODUCTIVE STRUGGLE \u2014 do not give the conversion. Put the groups on the clock for a full minute of arguing before you say anything. Circulate and listen for correct reasoning: 200 ms is a fifth of a second, 3000 ms is three seconds. If a group stalls, redirect with a question only: 'If 1000 is one second, is 200 more or less than a second?' Confirm answers only after the minute is up. VISUAL: just the two numbers, big, on an otherwise empty slide \u2014 no hints, no formula."
+      },
+      {
+        "order": 10,
+        "type": "activity_bridge",
+        "title": "Pick Your Roles",
+        "content": "Wirer \u2022 Coder \u2022 Checker\nWrite your Session 1 role at the top of your worksheet \u2014 plus the plan for Sessions 2 and 3.",
+        "speaker_notes": "Assign teams of 2\u20133. Explain each role in one sentence: Wirer builds the circuit, Coder types and uploads, Checker reads steps aloud and verifies before power. Everybody rotates \u2014 nobody does the same job three times, because everybody has to be able to explain the whole thing at the end. Every student must have a role written down before they leave. VISUAL: three role cards with a rotation arrow showing Session 1 \u2192 2 \u2192 3."
+      },
+      {
+        "order": 11,
+        "type": "recap",
+        "title": "Same Ideas, Different Outfit",
+        "content": "forever \u2192 loop() \u2022 green flag \u2192 setup() \u2022 wait \u2192 delay() \u2022 if/then \u2192 if(){} \u2022 set \u2192 digitalWrite()\nSemicolons end commands. Braces hug blocks.",
+        "speaker_notes": "Close the loop on the hook: they walked in able to program a cat, and they walk out with the translation table that turns that ability into Arduino code. Next session they don't type anything \u2014 they plug a board in and tell you what they saw. Remind them to keep the translation table handout. VISUAL: the completed translation table, all five rows visible, plus the two typing rules in a footer bar."
+      },
+      {
+        "order": 12,
+        "type": "hook",
+        "title": "Plug It In. Watch Closely.",
+        "content": "Connect the Arduino to USB.\nDon't blink.\nThen unplug and write ONE sentence: what happened the instant power arrived?",
+        "speaker_notes": "Build first, explain never \u2014 yet. Hand out boards and cables, have teams plug in and watch. They will see the green power LED come on instantly and possibly a second light flashing. Then unplug. Every student writes their own one-sentence observation. PRODUCTIVE STRUGGLE: students will immediately ask why nothing else happened and why there was no startup screen. Do not answer. 'Write your sentence first' is your only response. VISUAL: photo of an Arduino with the green ON LED circled."
+      },
+      {
+        "order": 13,
+        "type": "concept",
+        "title": "What Did You Notice?",
+        "content": "Read your sentence out loud.",
+        "speaker_notes": "Take one sentence per group. Your job is to fish for and repeat back the key observation: there was no waiting. No logo, no loading bar, no home screen \u2014 it was just on and doing its job. Write that on the board in the students' own words. Still no explanation. VISUAL: blank space or whiteboard capture area to collect student phrases live."
+      },
+      {
+        "order": 14,
+        "type": "concept",
+        "title": "A Microcontroller Is a Tiny Brain With One Job",
+        "content": "It holds ONE program.\nIt does that program forever.\nIt never gets distracted.",
+        "speaker_notes": "Now, and only now, explain. Define microcontroller: a small computer chip that stores exactly one program and runs it from the moment it has power. That is why there was no waiting \u2014 there was nothing to choose between and nothing to load. Connect back to Lesson 1: that one program is a sketch, and its forever part is loop(). VISUAL: simple cartoon brain icon inside a chip outline, with a single looping arrow."
+      },
+      {
+        "order": 15,
+        "type": "concept",
+        "title": "Your Laptop Has a Manager. The Arduino Doesn't.",
+        "content": "Operating system = the manager that decides which app gets a turn.\nArduino has no manager, because it has no apps.",
+        "speaker_notes": "Define operating system in student language: the program whose job is deciding which other program gets to use the machine right now. Windows, macOS, Android. That's what a startup screen is \u2014 the manager getting itself ready. The Arduino has one program and nobody to negotiate with, so it skips straight to work. VISUAL: two-panel comparison \u2014 laptop with many app windows and a 'manager' figure; Arduino with a single program box and no manager."
+      },
+      {
+        "order": 16,
+        "type": "concept",
+        "title": "Game Console vs. Handheld Toy",
+        "content": "Console: many games, a home screen, updates, waiting.\nSingle-game handheld: press power, you're playing.",
+        "speaker_notes": "Give the analogy they own. A console has to load a menu, check for updates, let you pick a game \u2014 that's a manager. A cheap single-game handheld boots straight into the game because it can't do anything else. The Arduino is the handheld. Ask for a show of hands for who prefers not waiting. Invite students to offer their own analogy \u2014 the objective says they must be able to explain this in their own words, so collect two or three. VISUAL: console + handheld photos, side by side."
+      },
+      {
+        "order": 17,
+        "type": "concept",
+        "title": "Everything the Board Does Is Input or Output",
+        "content": "Input = information coming IN (buttons, sensors)\nOutput = the board acting OUT on the world (lights, motors, sound)",
+        "speaker_notes": "Introduce the framing that organises the entire rest of the course. A game controller is almost entirely inputs \u2014 it notices you. A robot is mostly outputs \u2014 it acts. Preview the arc explicitly: next session we build an output, the session after we build an input, and on the last day we connect them into one working controller button. VISUAL: arrow diagram \u2014 INPUT \u2192 [Arduino] \u2192 OUTPUT, with example icons under each side."
+      },
+      {
+        "order": 18,
+        "type": "activity_bridge",
+        "title": "Your Turn: Take Apart a Controller (Out Loud)",
+        "content": "Name one INPUT on a game controller you've used.\nName one OUTPUT.\nWhere would the tiny brain sit?",
+        "speaker_notes": "Group quick check, 2 minutes. Expected inputs: buttons, triggers, sticks, motion sensing. Expected outputs: rumble motor, light bar, speaker. The tiny brain is the chip on the board inside \u2014 nobody sees it, everybody uses it. Take one answer per group and make sure every group speaks. VISUAL: exploded or cutaway image of a controller, unlabelled \u2014 let them do the labelling."
+      },
+      {
+        "order": 19,
+        "type": "recap",
+        "title": "No Startup Screen, No Manager, One Job",
+        "content": "You saw it start instantly.\nNow you know why: one program, no operating system.\nNext: give it a job you can SEE.",
+        "speaker_notes": "Tie back to the hook sentence they wrote. Their observation was the evidence; the microcontroller idea is the explanation. Check that every student's written sentence captures 'started instantly / no startup process'. Next lesson they make a light blink \u2014 the board's first output. VISUAL: the students' own collected phrases from slide 13, next to the words 'microcontroller' and 'no operating system'."
+      },
+      {
+        "order": 20,
+        "type": "hook",
+        "title": "How Do You Make a Light Obey You?",
+        "content": "One LED. One resistor. Eleven lines of code.\nBy the end of today it blinks \u2014 and you can say why.",
+        "speaker_notes": "Frame the session: today the board gets a way to ACT on the world \u2014 its first output. Show the finished blinking circuit briefly if you have a demo one, then take it away. Roles rotate today; announce who is Wirer, Coder, Checker. VISUAL: short looping video or GIF of a breadboarded LED blinking once per second."
+      },
+      {
+        "order": 21,
+        "type": "concept",
+        "title": "STOP \u2014 An LED Always Needs a Resistor",
+        "content": "A bare LED across 5V is a dead LED in about a second.\n220\u03a9 resistor: red\u2013red\u2013brown.",
+        "speaker_notes": "Read this aloud as a class \u2014 every student reads it, not just you. Narrow-straw analogy: the LED will happily drink as much current as it can get, and that kills it; the resistor is the narrow straw that limits how fast it can drink. The Checker's first job every single build is to point at the resistor and say out loud 'resistor is in.' Nothing gets power until you personally verify this at every station. VISUAL: big STOP sign; photo of a 220\u03a9 resistor with the red-red-brown bands labelled."
+      },
+      {
+        "order": 22,
+        "type": "concept",
+        "title": "LEDs Have a Direction",
+        "content": "Long leg = positive \u2192 toward the pin (through the resistor)\nShort leg \u2192 GND\nBackwards = no light, no damage.",
+        "speaker_notes": "Reassure them: getting polarity backwards is a mistake you can just fix \u2014 it doesn't break anything, the light simply won't come on. That makes 'is it backwards?' the first thing to check when a light won't light. Show a real LED and let them see the leg lengths. VISUAL: close-up LED diagram, long leg and short leg labelled, plus the flat spot on the rim as the second clue."
+      },
+      {
+        "order": 23,
+        "type": "activity_bridge",
+        "title": "Build It: Wirer Builds, Checker Reads",
+        "content": "Wirer follows the numbered steps.\nChecker reads each step aloud and traces the path with a finger.\nNo power until the resistor is confirmed.",
+        "speaker_notes": "13 minutes. Hand out the Session 1 wiring diagram. The Checker reading aloud is not busywork \u2014 it is how the non-building students stay in the circuit. Path to trace: pin 13 \u2192 resistor \u2192 LED long leg \u2192 LED short leg \u2192 GND. Instructor walks every station and verifies the resistor is in the path before anyone plugs in USB. VISUAL: the numbered wiring diagram, large, plus a photo of the finished build."
+      },
+      {
+        "order": 24,
+        "type": "activity_bridge",
+        "title": "Now Upload the Blink Sketch",
+        "content": "Coder types it, uploads it.\nExpect: about one blink per second.",
+        "speaker_notes": "7 minutes. Coder types from the printed starter code \u2014 typing it beats pasting it, because the semicolons and braces from Lesson 1 only become real when your own fingers make the mistakes. Common upload issues: wrong board selected, wrong port. Do not explain what the code means yet. VISUAL: the Blink sketch printed on the slide with setup() and loop() shaded in the same two colours used in Lesson 1."
+      },
+      {
+        "order": 25,
+        "type": "concept",
+        "title": "Wait \u2014 Count the Contradiction",
+        "content": "How many times does the code SAY to turn the light on?\nHow many times does it ACTUALLY turn on?\nWhat explains the gap?",
+        "speaker_notes": "'What did it do, and why?' \u2014 5 minutes in groups before you say anything. There is one digitalWrite(13, HIGH) in the sketch, and the LED has now turned on hundreds of times. Let them sit in that. Most groups will reach loop() on their own; that's the point. Do not confirm until every group has an answer out loud. VISUAL: the single digitalWrite HIGH line circled in red, with a counter graphic showing '1 line / \u221e blinks'."
+      },
+      {
+        "order": 26,
+        "type": "concept",
+        "title": "A Pin Is a Doorway",
+        "content": "pinMode(13, OUTPUT);\n\"Pin 13, your job is to send.\"\nIn setup() \u2014 so it runs ONCE.",
+        "speaker_notes": "Every numbered pin is a doorway between the code and the world, and each doorway has to be told which way traffic flows. OUTPUT means the board pushes electricity out through it. It lives in setup() because the pin only needs to be told its job once \u2014 it doesn't forget. Flag this line hard; it's the one they'll miss in the challenge in ten minutes. VISUAL: board diagram with pin 13 highlighted, arrow pointing outward, labelled 'sending'."
+      },
+      {
+        "order": 27,
+        "type": "concept",
+        "title": "digitalWrite: HIGH is 5V, LOW is 0V",
+        "content": "digitalWrite(13, HIGH); \u2192 5 volts \u2192 light on\ndigitalWrite(13, LOW);  \u2192 0 volts \u2192 light off",
+        "speaker_notes": "'Digital' means two choices only \u2014 like a light switch, not a dimmer. There is no 'a bit on'. HIGH puts 5 volts on the pin; LOW puts 0. That's the whole vocabulary of a digital output. Have them say HIGH-equals-on and LOW-equals-off aloud; they'll need it in Lesson 6 when they have to choose which one means 'lights on'. VISUAL: a wall light switch, up = HIGH = 5V, down = LOW = 0V."
+      },
+      {
+        "order": 28,
+        "type": "concept",
+        "title": "loop() Is the Forever Block \u2014 That's the Gap",
+        "content": "The code says ON once.\nloop() says: do it all again. And again. And again.",
+        "speaker_notes": "Resolve the contradiction from slide 25 and name it: the answer is loop(), exactly the forever block from Scratch in Lesson 1. Every time loop() reaches the bottom it jumps back to the top. Nobody wrote 'repeat' anywhere \u2014 repeating is what loop() IS. This is the exact idea the exit ticket asks about, so say it slowly. VISUAL: the loop() body with a big curved arrow from the closing brace back to the opening brace."
+      },
+      {
+        "order": 29,
+        "type": "concept",
+        "title": "delay() Is the Only Reason You Can See It",
+        "content": "Without delay(), the board switches the LED thousands of times per second.\nYour eye just sees a dim light that's always on.",
+        "speaker_notes": "delay(1000) between the HIGH and the LOW is what stretches the blink out to human speed. Take out the delays and the LED appears permanently on. Plant this deliberately \u2014 Sketch A in the next lesson (delay(50)) is designed to surprise them with exactly this, and Lesson 6 will explain why we deliberately drop delay() when polling a button. VISUAL: two timelines side by side \u2014 with delay (slow square wave, visible) and without (dense blur)."
+      },
+      {
+        "order": 30,
+        "type": "activity_bridge",
+        "title": "Your Turn: Change One Thing",
+        "content": "1. Make it blink twice as fast.\n2. Make a quick-quick-long signal.\n3. Move the LED to pin 9 \u2014 TWO things must change.",
+        "speaker_notes": "5 minutes, teams pick and go in order. PRODUCTIVE STRUGGLE on challenge 3: they will change digitalWrite immediately and forget pinMode. Do not name the second change. Give them at least three minutes, then ask only: 'Which line told the board what pin 13's job was \u2014 and does that line still say the right pin?' Note which teams find it unaided. VISUAL: the three challenges as numbered cards; challenge 3 with a small '2' badge and no further hint."
+      },
+      {
+        "order": 31,
+        "type": "recap",
+        "title": "Exit Ticket: The Light Obeys \u2014 Say Why",
+        "content": "In your own words: why does the LED keep blinking when the code only says turn on ONE time?",
+        "speaker_notes": "Written, individual, 2 minutes. A correct answer references loop() repeating from the top. Collect before anyone packs up. Then record the role rotation for Session 2 on the worksheet \u2014 today's Wirer is not tomorrow's Wirer. Close on the arc: the board can now act. Next session it learns to notice you. VISUAL: exit ticket slip mock-up; footer strip showing the three-session arc with Session 1 ticked."
+      },
+      {
+        "order": 32,
+        "type": "hook",
+        "title": "Today We Prove We Can READ Code",
+        "content": "Anyone can press upload.\nCan you say what a sketch will do before you run it?",
+        "speaker_notes": "State the standard plainly: running code and understanding code are different skills, and today is about the second one. Nobody uploads anything for the first twenty minutes. Tell them up front that at least one of the three sketches is going to surprise somebody in this room \u2014 that raises the stakes on committing to a prediction. VISUAL: an unfamiliar short sketch on screen with a big question mark over a drawing of an LED."
+      },
+      {
+        "order": 33,
+        "type": "activity_bridge",
+        "title": "Three Sketches. Three Predictions. Alone.",
+        "content": "One line each: what does the LED do?\nA: delay(50) both ways\nB: never turns the LED off\nC: digitalWrite in setup() only",
+        "speaker_notes": "10 minutes, silent and individual \u2014 no conferring, no computers. Every student writes a one-line prediction for each sketch. Circulate but answer nothing; 'write what you think and we'll find out' is your whole script. Make sure they've physically written all three before groups form. VISUAL: the three sketches printed side by side on the worksheet, labelled A, B, C; slide shows them at readable size."
+      },
+      {
+        "order": 34,
+        "type": "activity_bridge",
+        "title": "Now Argue. One Answer Per Group, With a Reason.",
+        "content": "Disagreements are settled by argument \u2014 not by running the code.",
+        "speaker_notes": "7 minutes. Each group must land on ONE written prediction per sketch plus a stated reason. PRODUCTIVE STRUGGLE: students will ask you directly whether they're right. Do not confirm or deny \u2014 the surprise from Sketch A is the teaching moment and it's destroyed if you spoil it. Redirect with 'What does loop() do after the last line?' or 'Where does that line live \u2014 setup or loop?' No team tests until its written prediction is committed. VISUAL: a 'PREDICTION LOCKED' stamp graphic; keyboards symbolically off-limits."
+      },
+      {
+        "order": 35,
+        "type": "activity_bridge",
+        "title": "Test It. Mark Yourself Honestly.",
+        "content": "Upload A, then B, then C.\nTick: prediction held / prediction missed.",
+        "speaker_notes": "12 minutes on the real circuits from Lesson 3, one sketch at a time. Watch faces during Sketch A \u2014 50 ms each way is too fast for the eye to fully resolve, so it looks like a dim or steady light, not a blink. Let them react before you explain. Being wrong here is normal and is worth saying out loud. VISUAL: results table with three rows and a tick/cross column."
+      },
+      {
+        "order": 36,
+        "type": "concept",
+        "title": "Sketch A: Too Fast to See",
+        "content": "delay(50) is real blinking \u2014 your eye just can't keep up.\nThat's what delay() is FOR.",
+        "speaker_notes": "The LED genuinely turns on and off ten times a second; human vision blurs it into a dim, steady glow. Connect straight back to Lesson 3, slide 29: delay() exists to bring machine speed down to human speed. Ask: how slow would it have to be before you could count the blinks? Let them estimate. VISUAL: the same fast/slow timeline pair from Lesson 3, reused deliberately so they recognise it."
+      },
+      {
+        "order": 37,
+        "type": "concept",
+        "title": "Sketch C: setup() Runs Once. Only Once.",
+        "content": "digitalWrite in setup() = the LED turns on and just\u2026 stays on.\nNothing repeats it, because nothing repeats setup().",
+        "speaker_notes": "This is the big misconception to surface: many students assume everything in the file repeats. Tally the class results on the whiteboard and name the pattern out loud. Sketch B (never turned off) and Sketch C look identical on the circuit but for different reasons \u2014 push a group to articulate that difference. Log any group that still cannot explain loop() and pull them for a short reteach now, not later. VISUAL: whiteboard tally photo placeholder; setup() box with '\u00d71' and loop() box with '\u221e'."
+      },
+      {
+        "order": 38,
+        "type": "activity_bridge",
+        "title": "Partner Drill: Explain One Line",
+        "content": "Cover the comments.\nExplain one line of the Blink sketch to your partner. Then swap.",
+        "speaker_notes": "5 minutes. No reading from comments or notes. This is a rehearsal for the Lesson 7 exit check, so tell them that \u2014 it lowers the stakes now and raises the seriousness. Note any student who cannot explain a single line; they're your priority to check on in Lessons 5 and 6. VISUAL: the Blink sketch with the comment column blacked out."
+      },
+      {
+        "order": 39,
+        "type": "recap",
+        "title": "You Can Read It Now",
+        "content": "setup() runs once. loop() runs forever.\nHIGH is on, LOW is off. delay() makes it visible.\nNext: the board starts listening.",
+        "speaker_notes": "Close on the hook: they predicted behaviour from code they'd never seen, and where they were wrong they can now say exactly why. Everything so far has been the board talking. Next session the wire runs the other way \u2014 the board starts listening to them. VISUAL: four-point summary card; arrow flipping direction from OUT to IN as a teaser."
+      },
+      {
+        "order": 40,
+        "type": "hook",
+        "title": "Now the Board Notices YOU",
+        "content": "Last session a pin was a sender.\nToday a pin becomes a listener.",
+        "speaker_notes": "Frame the flip clearly. An input is information coming in \u2014 this is the half of a game controller that notices your thumb. Roles rotate: new Wirer, new Coder, new Checker. Important housekeeping: the LED circuit from Lesson 3 STAYS on the board. Don't let anyone tear it down; Lesson 6 needs it. VISUAL: the INPUT \u2192 [Arduino] \u2192 OUTPUT diagram from Lesson 2, with the INPUT arrow now highlighted."
+      },
+      {
+        "order": 41,
+        "type": "activity_bridge",
+        "title": "Build It: Two Wires, No Resistor",
+        "content": "Button straddles the centre gap.\nPin 2 \u2192 one leg.\nGND \u2192 the leg on the OPPOSITE side.",
+        "speaker_notes": "10 minutes. New Wirer builds from the Session 2 diagram. The button must straddle the breadboard's centre gap or the two sides are already connected. New Checker presses it to confirm the click, and confirms that nothing lights up \u2014 that's expected, we haven't written any code yet. Flag it: only two wires and no external resistor, which will look suspicious to anyone who remembers the LED rule. Promise you'll explain. VISUAL: Session 2 wiring diagram, plus a top-down photo showing the button across the centre gap."
+      },
+      {
+        "order": 42,
+        "type": "activity_bridge",
+        "title": "MANDATORY PREDICTION \u2014 Nobody Uploads Yet",
+        "content": "Write on your slip:\nNot pressed, the Serial Monitor shows ___\nPressed, it shows ___\nHand it to the instructor. Then you may upload.",
+        "speaker_notes": "4 minutes. Hard gate: no slip, no upload. Collect slips physically. Most teams will predict 0 for unpressed and 1 for pressed \u2014 the intuitive answer, and the wrong one. Say nothing. Slips are graded on participation only, never correctness, and tell them that so they commit honestly. VISUAL: the prediction slip mock-up, two blanks, big."
+      },
+      {
+        "order": 43,
+        "type": "activity_bridge",
+        "title": "Upload, Open the Serial Monitor, Watch",
+        "content": "Hold the button. Release. Hold. Release.\nWhat are the numbers actually doing?",
+        "speaker_notes": "8 minutes. Coder uploads the digitalRead sketch and opens the Serial Monitor (Tools \u2192 Serial Monitor; check the baud rate matches). Numbers stream: 1 when released, 0 when pressed \u2014 backwards from almost everyone's prediction. Normalise it out loud: 'Most teams get this backwards, including engineers.' PRODUCTIVE STRUGGLE: they will demand the reason immediately. Do not give it until every team has seen BOTH states and attempted their own explanation out loud. Redirect only with: 'What is the pin connected to when you are NOT pressing?' VISUAL: screenshot of a Serial Monitor streaming 1s then 0s."
+      },
+      {
+        "order": 44,
+        "type": "concept",
+        "title": "A Listening Pin With Nothing Attached Is Lost",
+        "content": "An unconnected input pin 'floats' \u2014 it picks up noise and reports nonsense.\nLike a microphone in an empty room.",
+        "speaker_notes": "Now explain. A pin set to listen has to hear SOMETHING. With nothing holding it, it drifts and picks up electrical noise, so the readings are garbage. A microphone in an empty room still hisses. So the pin needs a default \u2014 something to hold it steady when you aren't touching the button. VISUAL: cartoon pin with a wobbling needle / random 1s and 0s spraying out."
+      },
+      {
+        "order": 45,
+        "type": "concept",
+        "title": "INPUT_PULLUP: A Spring-Loaded Door",
+        "content": "pinMode(2, INPUT_PULLUP);\nAn internal resistor gently holds the pin at 5V \u2014 so it reads HIGH (1) by default.",
+        "speaker_notes": "INPUT_PULLUP switches on a resistor built into the chip that gently pulls the pin up to 5 volts. Spring-loaded door analogy: left alone, it always swings back closed \u2014 that closed position is HIGH. This is why an untouched button reads 1. Emphasise 'gently' \u2014 it's a weak pull, and that matters on the next slide. VISUAL: schematic showing the internal pull-up resistor from 5V to pin 2, drawn as a spring."
+      },
+      {
+        "order": 46,
+        "type": "concept",
+        "title": "Pressing Connects Straight to GND \u2014 and GND Wins",
+        "content": "Pressed = pin wired directly to 0V = reads LOW (0).\nA direct connection always beats a gentle pull.",
+        "speaker_notes": "The button's other leg goes to GND. Press it, and the pin has a direct, strong path to 0 volts \u2014 that overpowers the gentle pull-up instantly, and the pin reads LOW. So: NOT pressed = HIGH = 1, pressed = LOW = 0. Say the whole sentence twice; it's the exit ticket. Also address the missing resistor: none is needed externally because the pull-up is already inside the chip. Fewer wires, fewer failure points. VISUAL: two-panel schematic \u2014 released (spring holds pin at 5V) vs pressed (hard wire to GND), with the resulting number under each."
+      },
+      {
+        "order": 47,
+        "type": "concept",
+        "title": "The Code Words You Just Used",
+        "content": "digitalRead(2) \u2014 ask the pin what it hears\nint buttonState \u2014 a labelled box to keep the answer in\nSerial Monitor \u2014 the board's way of talking back to you",
+        "speaker_notes": "Define each briefly. digitalRead returns HIGH or LOW. 'int' declares a labelled box that holds a whole number; buttonState is just the label we chose for it. Serial Monitor is a text window \u2014 it's how you see inside the board's head, and it's the single best debugging tool they have. Point out that buttonState = digitalRead(2); is 'ask, then store'. VISUAL: the button-read sketch with the three items colour-coded and arrows to their definitions; a labelled box drawing for the int."
+      },
+      {
+        "order": 48,
+        "type": "activity_bridge",
+        "title": "Say It Back \u2014 Everyone, Out Loud",
+        "content": "\"Not pressed reads ___ because ___.\"\n\"Pressed reads ___ because ___.\"",
+        "speaker_notes": "4 minutes. Every single team member says both sentences aloud \u2014 not one spokesperson per group. The reason is mandatory, not just the value: 'because the pull-up holds it at 5V' and 'because pressing connects it straight to ground'. Move station to station and actually listen; this is the assessment. VISUAL: the two sentence frames with blanks, large."
+      },
+      {
+        "order": 49,
+        "type": "activity_bridge",
+        "title": "Extension: Make It Print PRESSED",
+        "content": "Fill in the blanks so the Serial Monitor prints PRESSED \u2014 plus a message your team chooses.\nWatch out: = is not ==",
+        "speaker_notes": "4 minutes. Use if (buttonState == LOW). Flag the classic bug explicitly before they hit it: one equals ASSIGNS a value, two equals ASKS a question. If their code behaves as if the button is always pressed, that's the first thing to check. Let teams pick their own message \u2014 ownership matters. Check working code at each station. VISUAL: side-by-side '=  means: put this in the box' vs '== means: is this the same?'"
+      },
+      {
+        "order": 50,
+        "type": "recap",
+        "title": "Exit Ticket: The Board Is Listening",
+        "content": "Why does an unpressed button read HIGH instead of LOW?",
+        "speaker_notes": "Written, individual, before packing up. Look for the pull-up resistor idea in their own words. Record the Session 3 role rotation. Close the arc: Session 1 gave the board a way to act, Session 2 gave it a way to notice \u2014 next session we connect the two and you'll have built a real controller button. Remind them: leave BOTH circuits assembled. VISUAL: three-session arc strip with Sessions 1 and 2 ticked and Session 3 glowing."
+      },
+      {
+        "order": 51,
+        "type": "hook",
+        "title": "Read. Decide. Act.",
+        "content": "The board can act. The board can notice.\nToday they meet \u2014 and you get a controller button.",
+        "speaker_notes": "Name the shape of the whole thing: read the input, decide, drive the output. Tell them this exact pattern is behind every robot bumper sensor, every fire button, every vending machine, every automatic door. They are not doing a toy version of it \u2014 they are doing the actual thing, smaller. Final role rotation: everyone should now have done all three jobs. VISUAL: three-box flow \u2014 digitalRead \u2192 if/else \u2192 digitalWrite \u2014 with a finger-press photo at the left and a lit LED at the right."
+      },
+      {
+        "order": 52,
+        "type": "concept",
+        "title": "Two Circuits, One Ground",
+        "content": "Everything that needs GND shares one rail.\nGND \u2192 long rail row \u2192 LED short leg AND one side of the button.",
+        "speaker_notes": "Explain the shared ground rail as the common return path \u2014 both circuits need a way back to ground, so we run one jumper from the Arduino's GND to a long rail row and hang both parts off it. This is the first time they combine circuits, so go slowly. Confirm the two full paths: LED long leg \u2192 resistor \u2192 pin 13, and button's other side \u2192 pin 2. VISUAL: combined Session 3 wiring diagram with the GND rail highlighted in a single bold colour."
+      },
+      {
+        "order": 53,
+        "type": "activity_bridge",
+        "title": "Build It: Checker Traces BOTH Paths",
+        "content": "Out loud, before anything uploads:\n\"Pin 13, to resistor, to LED long leg, to ground rail.\"\n\"Resistor is in.\"",
+        "speaker_notes": "12 minutes. New Checker traces both paths with a finger and narrates them, then says 'resistor is in' out loud \u2014 same ritual as Lesson 3, now with two circuits to verify. Instructor confirms the resistor at every station before power. Common errors to look for: button not straddling the centre gap, LED short leg not actually on the ground rail, GND jumper in the wrong rail row. VISUAL: the combined diagram again with two coloured trace lines overlaid."
+      },
+      {
+        "order": 54,
+        "type": "activity_bridge",
+        "title": "Three Blanks. That's All You're Missing.",
+        "content": "1. pinMode direction for pin 13\n2. Which value means PRESSED\n3. HIGH or LOW for lights-on",
+        "speaker_notes": "10 minutes. PRODUCTIVE STRUGGLE \u2014 do not fill in a blank for any team, ever. Everything they need is already in their notes: pin 13 sends, so OUTPUT (Lesson 3); pressed reads LOW (Lesson 5); HIGH means on (Lesson 3). Point them at their own translation table and exit tickets, not at the answer. Then upload and test: press, release, press, release. VISUAL: the final sketch with three empty highlighted blanks, and small margin notes reading 'Session 1', 'Session 2', 'Session 1'."
+      },
+      {
+        "order": 55,
+        "type": "activity_bridge",
+        "title": "Not Working? Work the Checklist. In Order. Out Loud.",
+        "content": "Checker leads. Start at item 1. Say what you've ruled out.",
+        "speaker_notes": "6 minutes. Hand the troubleshooting checklist to any stuck team \u2014 do not point at a wire and do not diagnose for them. If the LED behaves backwards, the team must state aloud what an unpressed button reads BEFORE changing a single thing; that usually solves it on its own. Offer direct help only after a team has worked the relevant section and can name what they've eliminated. Teams that got there unaided: note them. VISUAL: the numbered troubleshooting checklist, readable on screen as well as on paper."
+      },
+      {
+        "order": 56,
+        "type": "concept",
+        "title": "Where Did delay() Go?",
+        "content": "No delay in this sketch.\nThe board reads, decides and writes thousands of times per second \u2014 so it feels instant.",
+        "speaker_notes": "Ask the 'what did it do, and why?' question: why is there no delay here when Lesson 3 was full of them? Because delay() freezes the board, and a frozen board isn't listening to your thumb. A real controller polls its buttons constantly for exactly this reason. Connect back to Lesson 4's Sketch A: fast is invisible, and here that's the goal. Foreshadow: this is the trap in tomorrow's 'robot headlight' stretch challenge. VISUAL: loop cycling read\u2192decide\u2192write with a speedometer or 'thousands/second' label."
+      },
+      {
+        "order": 57,
+        "type": "concept",
+        "title": "if/else Is Where Deciding Lives",
+        "content": "if (buttonState == LOW) { light on }\nelse { light off }",
+        "speaker_notes": "Point back to Lesson 1: this is the Scratch if/then block wearing its Arduino outfit. The if holds the question, the braces hold what happens when the answer is yes, else holds everything else. Every line in the sketch is now one of three jobs: read, decide, or act. Have them label their printed code with those three words \u2014 it makes tomorrow's annotation much easier. VISUAL: the finished loop() with three coloured bands labelled READ / DECIDE / ACT."
+      },
+      {
+        "order": 58,
+        "type": "recap",
+        "title": "You Built a Controller Button",
+        "content": "Press \u2192 digitalRead sees LOW \u2192 if decides \u2192 digitalWrite makes 5V \u2192 light.\nRelease \u2192 it all runs again.",
+        "speaker_notes": "5 minutes. Every team confirms a working press-to-light circuit and gets its annotated code ready for tomorrow. Teams that used the checklist must say which numbered item fixed their problem. Tie back to Lesson 2's promise: inputs on one side, outputs on the other, and now they've written the piece in the middle. Preview tomorrow honestly: a working light is not the finish line \u2014 explaining it is. VISUAL: photo of a finished build mid-press, with the full signal path arrowed across it."
+      },
+      {
+        "order": 59,
+        "type": "hook",
+        "title": "A Working Light Isn't the Finish Line",
+        "content": "Anyone can copy a circuit.\nToday the standard is: can YOU explain it?",
+        "speaker_notes": "Restate the course objective out loud: write and explain a program that reads a digital input and controls a digital output. Set the exit check standard clearly and unapologetically \u2014 every person, individually, has to walk through it. Also tell them the reward: passing the exit check unlocks the stretch challenges. That's the deal. VISUAL: the course objective in full, plus a locked-padlock icon on a 'Stretch Challenges' card."
+      },
+      {
+        "order": 60,
+        "type": "activity_bridge",
+        "title": "Silent. Individual. Annotate Every Line.",
+        "content": "Beside each line, write what it does \u2014 in your own words.\nNo conferring.",
+        "speaker_notes": "12 minutes. Each student gets a printed copy of their own team's finished sketch. Teammates may not confer at all during this phase; this is the individual evidence for the objective. 'In your own words' is enforced \u2014 copying the comment back doesn't count. Circulate silently and note who is stalling on which lines. VISUAL: annotated-code example (a different sketch, so it models the format without giving answers)."
+      },
+      {
+        "order": 61,
+        "type": "activity_bridge",
+        "title": "Walk Me Through It \u2014 Notes Down",
+        "content": "\"What happens between my finger pressing the button and the light turning on?\"\nMust include: pin \u2022 digitalRead \u2022 HIGH/LOW \u2022 if \u2022 digitalWrite",
+        "speaker_notes": "13 minutes. Each student takes a turn within their group, speaking without reading from their notes. Teammates who hear a gap ask a question rather than supplying the answer \u2014 model one first ('So what did the pin actually read at that moment?'). Instructor listens to at least one walkthrough per group and deliberately spot-checks the weaker explainers identified in Lessons 4 and 6. Miss a term? Re-question on that step only and give a second attempt. VISUAL: the five required terms as five checkboxes across the bottom of the slide."
+      },
+      {
+        "order": 62,
+        "type": "activity_bridge",
+        "title": "Unlocked: Pick ONE Stretch Challenge",
+        "content": "Robot headlight \u2014 stays on 3s after a quick press\nToggle \u2014 press on, press off, board must remember\nFire button \u2014 three fast flashes per press\nDesign your own \u2014 two buttons, two LEDs, with a diagram",
+        "speaker_notes": "14 minutes. Teams pick ONE. PRODUCTIVE STRUGGLE: the headlight and toggle both need an idea nobody has been handed \u2014 storing state across loops, or the fact that delay() blocks the loop and stops the board listening. Give only the hints printed on the card ('what did delay() do in Session 1?' / 'the board needs to remember what it did last time') and let them sit with it for a full eight minutes before any further nudge \u2014 and make that nudge a question too. Students who didn't pass the exit check re-annotate and re-attempt with you instead. Stretch success is bonus, never part of the objective. VISUAL: four challenge cards; hint text in small type at the bottom of each."
+      },
+      {
+        "order": 63,
+        "type": "recap",
+        "title": "From Scratch Cat to Controller Button",
+        "content": "forever \u2192 loop(). Green flag \u2192 setup().\nA button in. A light out. A decision in between.\nShow us your build \u2014 and name the ONE thing you'd try next.",
+        "speaker_notes": "3 minutes. Each team demonstrates its stretch build or its best attempt and names one thing it would try next \u2014 the 'next thing' matters more than whether it worked. Close the whole arc back on Lesson 1's hook: they walked in able to move a Scratch cat, and they walk out having built and explained a real piece of hardware that notices a human and responds. Point at the pattern one last time \u2014 read, decide, act \u2014 and tell them it's the same pattern in every robot they'll ever build. VISUAL: side-by-side of the Lesson 1 Scratch script and the finished Arduino sketch, with the completed three-session arc strip underneath."
+      }
+    ]
+  },
+  "evaluation": {
+    "summary": "A strong, tightly sequenced 7-lesson unit with unusually well-protected productive-struggle checkpoints and near-complete lesson-to-slide coverage, but the capstone build (Lesson 6) reduces the 'write a program' half of the course objective to a three-blank fill-in, and two smaller mismatches (a role-rotation instruction on slide 20 and a one-minute allocation for a one-minute struggle in Lesson 1) need fixing. Send back for a targeted revision rather than straight to human sign-off.",
+    "pass": false,
+    "checks": {
+      "objective_preserved": {
+        "pass": false,
+        "notes": "The original objective is 'write AND explain an Arduino program that reads a digital input and controls a digital output.' The 'explain' half is preserved excellently and assessed summatively in Lesson 7 (line-by-line annotation plus a five-term spoken walkthrough). The 'write' half has been diluted at every step: Lesson 3 has the Coder type a printed starter sketch, Lesson 5 uses fill-in-the-blank extension code, and Lesson 6 \u2014 the capstone \u2014 restates the objective as 'complete and upload a sketch' with three blanks. No lesson requires any student to author the read/decide/act structure themselves; the only genuine authoring opportunity (the Lesson 7 stretch challenges) is gated behind the exit check and explicitly labelled 'bonus, not part of the objective.' As written, a student could meet every assessment in the unit without ever having written a sketch."
+      },
+      "productive_struggle_preserved": {
+        "pass": true,
+        "notes": "Struggle is deliberately engineered and protected almost everywhere: the delay() conversion is withheld (L1/slide 9), the microcontroller explanation is withheld until every team has written and shared an observation (L2/slide 12-13), the pin-9 challenge hides the pinMode change (L3/slide 30), predictions are hard-gated before testing in both L4 (slide 34) and L5 (slide 42), and L6/slide 54-55 explicitly forbids filling a blank or pointing at a wire. Slide speaker notes consistently supply question-form redirects rather than answers. The one narrowing is that L6's three blanks confine the capstone struggle to three multiple-choice-scale decisions plus debugging \u2014 the friction that remains is real, but it is thinner than the objective implies (see objective_preserved flag)."
+      },
+      "pedagogy_compliance": {
+        "pass": true,
+        "notes": "Build-before-explain (L2 power-up, L3 build then explain, L5 observe-then-pull-up), the recurring 'What did it do, and why?' routine (L3/slide 25, L6/slide 56), rotating Wirer/Coder/Checker roles so every student does every job, the safety STOP block read aloud by the class with a Checker 'resistor is in' ritual verified by the instructor at every station before power (L3/slide 21, L6/slide 53), prediction-before-test gates, and an every-student-explains standard are all present and reinforced in speaker notes. Caveat for the human reviewer: no explicit instructor non-negotiables list was supplied in this context, so compliance is judged against the visible in-unit rules (resistor check, no-upload-without-prediction-slip, individual explanation), all of which are honoured consistently."
+      },
+      "internal_consistency": {
+        "pass": false,
+        "notes": "Coverage is otherwise excellent and one-to-one (L1\u2192slides 1-11, L2\u219212-19, L3\u219220-31, L4\u219232-39, L5\u219240-50, L6\u219251-58, L7\u219259-63), with deliberate callbacks (slide 36 reuses slide 29's timeline; slide 54's margin notes point back to Sessions 1 and 2). Two mismatches: slide 20 tells the instructor roles rotate at the start of Lesson 3, but Lesson 1 assigned Session 1 roles and Lesson 3 is still Session 1 (it ends by 'recording the role rotation for Session 2'); and Lesson 4's Sketch B has no dedicated slide while A and C each get one, leaving the B-vs-C distinction only in slide 37's speaker notes."
+      },
+      "grade_appropriateness": {
+        "pass": true,
+        "notes": "Consistent with the implied persona \u2014 a Scratch-fluent learner making the block-to-text transition, roughly upper-elementary to middle school. Evidence: every new construct is anchored to a Scratch equivalent, analogies are age-owned (game console vs. single-game handheld, spring-loaded door, narrow straw, microphone in an empty room), no Ohm's law or voltage-divider maths is required, INPUT_PULLUP removes the external-resistor wiring burden, and error-normalising language ('most teams get this backwards, including engineers') is used throughout. The only cognitive stretch is the ms\u2192s conversion in Lesson 1 (200 ms = one-fifth of a second), which is reasonable for that band. Note: the analysis-step persona spec was not included in this context, so a human should confirm the intended grade band."
+      }
+    },
+    "flags": [
+      "Lesson 6 / slide 54 ('Three Blanks. That's All You're Missing.'): the capstone reduces the course objective's 'write' verb to three fill-in-the-blank choices (pinMode direction, which value means PRESSED, HIGH/LOW for on). No student authors the read/decide/act loop themselves anywhere in the unit. Revision option: increase the blanks to include the digitalRead assignment line and the if/else skeleton, OR add an authoring beat to Lesson 7 (e.g., after the walkthrough, each student reconstructs loop() from a blank page using only their annotated notes) so the 'write' half of the objective is actually assessed.",
+      "Lesson 6 objective wording: it reads 'complete and upload a sketch,' which is a weaker verb than the course objective's 'write.' Align the lesson objective with whatever authoring step is added, so the terminal lesson doesn't formally lower the bar.",
+      "Slide 20 ('How Do You Make a Light Obey You?') speaker notes say 'Roles rotate today; announce who is Wirer, Coder, Checker.' Lesson 3 is still Session 1 \u2014 roles were assigned in Lesson 1 and the plan records the first rotation at the END of Lesson 3 for Session 2. Delete the rotation instruction from slide 20 and replace with 'confirm the Session 1 roles assigned in Lesson 1.'",
+      "Lesson 1 timing vs. its own productive-struggle checkpoint: the activity allots 8-9 min (one minute total) for the delay() quick check, but the checkpoint requires a full minute of unaided group argument BEFORE the instructor confirms or redirects. Slide 9 repeats the full-minute rule. As scheduled the struggle will be truncated in practice \u2014 extend the quick check to 2-3 minutes or trim a translation-table slide (slides 2-5 currently run four slides in four minutes).",
+      "Lesson 4 / slide coverage: Sketch B (LED never turned off) has no dedicated concept slide, unlike Sketch A (slide 36) and Sketch C (slide 37). The B-vs-C discrimination \u2014 same visible behaviour, different cause \u2014 is the sharpest reasoning move in the lesson and currently lives only in slide 37's speaker notes. Add a slide or a labelled panel making the B/C contrast explicit.",
+      "For the human reviewer: the analysis-step persona/grade-band spec and any instructor non-negotiables list were not supplied with this bundle, so grade-appropriateness and non-negotiable compliance were assessed against in-unit evidence only. Confirm against the original analysis output before sign-off."
+    ]
+  }
+}

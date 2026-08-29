@@ -1,0 +1,53 @@
+{
+  "idea": "Build a robotic arm that sorts LEGO bricks by color, for our summer coding camp.",
+  "assessment": {
+    "summary": "Building a color-sorting robotic arm is a strong, well-aligned afterschool robotics project with obvious coding, sensing, and mechanical-design content, but the proposal omits the grade band, the number/length of camp sessions, and what hardware platform the program already owns. Those gaps have to be closed (and the arm's degrees of freedom scoped) before a course JSON can be authored.",
+    "verdict": "needs_more_info",
+    "checks": {
+      "grade_level_fit": {
+        "pass": false,
+        "notes": "No age or grade stated; 'summer coding camp' implies prior coding exposure but that spans roughly grades 3-12. The build is achievable at very different levels \u2014 pre-built servo arm with block coding for ~grades 4-6, versus Arduino/Python with calibration math and state machines for ~grades 7-12 \u2014 and the two require different course designs. Cannot judge until a band is given."
+      },
+      "materials_feasibility": {
+        "pass": true,
+        "notes": "All parts are standard afterschool inventory or cheaply sourced: microcontroller (Arduino/micro:bit), 3-4 hobby servos, a color sensor (TCS34725 or LEGO EV3/SPIKE color sensor), a servo driver or shield, an external 5-6V supply, and cardboard/laser-cut/3D-printed or LEGO Technic linkages. LEGO bricks are a plausible sorting target (uniform size, high-contrast colors). Not stated which platform the program owns, so the exact bill of materials is undetermined but no exotic item is implied."
+      },
+      "instructor_capability": {
+        "pass": true,
+        "notes": "Teachable by a non-specialist with prep if the arm uses hardcoded/taught servo positions and a simple color-threshold lookup. Would fail if the design requires inverse kinematics, PID, or camera-based vision \u2014 those need domain expertise most STEM is FUN instructors won't have. Prep burden includes pre-assembling or pre-testing the arm frame and calibrating the color sensor under the room's lighting."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "High value: Claude can author servo-sweep and sensor-read code samples, a color-calibration worksheet (record RGB values per brick color, derive thresholds), a pick-place state-machine scaffold, debugging checklists, and tiered challenges (add a fourth color, add a reject bin, speed contest)."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "No session count or session length given. A full multi-joint arm plus gripper plus sensor calibration plus sorting logic is realistically a 4-6 session unit, not a single session. Without knowing the camp's structure (e.g. 5 days x 90 min vs. one 2-hour workshop) the scope can't be validated, and as written the project risks being too large."
+      },
+      "safety": {
+        "pass": true,
+        "notes": "Low-risk overall: servo pinch points at joints, small LEGO parts (choking concern only if the band turns out to be K-2), low-voltage DC power, and hot-glue if used for the frame. Mitigations are routine \u2014 keep fingers clear of the moving arm, current-limited power supply, adult-supervised glue gun. Final safety sign-off depends on the grade band being confirmed."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "Excellent fit for productive struggle: students must calibrate sensor thresholds against real lighting, tune gripper geometry so bricks don't slip, and sequence the arm's motions. Genuine failure modes with diagnosable causes, plus clear decision points rather than a fixed recipe."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "What grade/age band is the camp serving? (This determines block-based vs. text-based coding and whether calibration math is in scope.)",
+      "How many sessions is the camp and how long is each session?",
+      "What hardware does the program already have \u2014 LEGO SPIKE/EV3 with color sensors, an Arduino kit with hobby servos, micro:bit, or nothing yet?",
+      "Do students have prior coding experience from earlier camp weeks, and in what language/environment?",
+      "Is there a budget for purchasing servos/color sensors, and roughly how many student teams (i.e. how many arm kits) need to be equipped?"
+    ],
+    "suggested_changes": [
+      "State a target grade band (e.g. grades 6-8) so the coding environment and math level can be fixed.",
+      "State the session count and length; if it's fewer than about four sessions, reduce scope \u2014 e.g. a fixed 2-servo sorter (sensor arm + sweep/chute gate) instead of a full multi-joint arm with gripper.",
+      "Specify the platform (LEGO SPIKE/EV3 vs. Arduino + hobby servos) so a concrete bill of materials can be written.",
+      "Constrain the sorting task to 3-4 high-contrast LEGO colors (e.g. red, blue, yellow, black) to keep sensor calibration tractable.",
+      "Pre-assemble the arm's mechanical frame (or supply a kit) so student build time goes to gripper design, calibration, and code rather than structural assembly.",
+      "Keep the control approach to taught/hardcoded servo positions rather than inverse kinematics or camera vision, so a non-specialist instructor can support it."
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "idea": "Have our 4th grade after-school group build and operate a live CO2 laser cutter from raw parts, unsupervised, to engrave sheet metal, in one 45-minute session.",
+  "assessment": {
+    "summary": "A 4th-grade group building and operating a CO2 laser cutter from raw parts, unsupervised, in 45 minutes fails on nearly every dimension: Class 4 laser and high-voltage hazards, unsupervised minors, exotic parts, and an impossible time scope. There is no version of this specific activity that can be safely authored or run.",
+    "verdict": "not_feasible",
+    "checks": {
+      "grade_level_fit": {
+        "pass": false,
+        "notes": "Grade band is clearly stated (4th grade, roughly ages 9-10), so the information isn't missing -- but no plausible K-12 band exists for assembling and firing a Class 4 CO2 laser from raw components. Laser-safety training and high-voltage assembly are adult/technician tasks; 4th grade is far outside any workable band."
+      },
+      "materials_feasibility": {
+        "pass": false,
+        "notes": "Requires a CO2 laser tube, a 15-30 kV laser power supply, mirrors/focusing optics and alignment tooling, a motion gantry and controller, a water chiller, and a ducted fume extraction system. That is thousands of dollars of specialty equipment, not Arduino/craft-supply territory. Separately, a CO2 laser cannot engrave bare sheet metal at all -- metal marking needs a fiber laser or a marking-spray coating -- so the stated deliverable is not achievable even with the equipment."
+      },
+      "instructor_capability": {
+        "pass": false,
+        "notes": "Requires a designated Laser Safety Officer, competence aligning laser optics, and safe handling of a high-voltage supply with lethal stored charge. This is specialist certification, not 'reasonable prep' for a typical STEM is FUN instructor."
+      },
+      "ai_assistance_value": {
+        "pass": false,
+        "notes": "Claude can author light/optics explanations and worksheets, but the substance of this idea is a hazardous physical build-and-operate procedure that cannot be run at all -- there is no lesson for the pipeline to author around it. AI value would only exist for a fundamentally different activity."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "45 minutes is not enough to assemble any laser cutter -- a professional kit build plus optical alignment is multi-day work. Even the operation-only portion (safety briefing, focus, test cut) would exceed one session."
+      },
+      "safety": {
+        "pass": false,
+        "notes": "Hard blocker. A CO2 laser is Class 4: invisible 10.6 um beam causes instant permanent retinal and skin injury from direct or reflected light; sheet metal is highly reflective. Add lethal high-voltage DC, laser-cutting fumes/metal particulate requiring ducted extraction, fire risk, and sharp sheet metal edges. The explicit 'unsupervised' condition with 9-year-olds makes this uninsurable and almost certainly a violation of program and facility policy regardless of mitigations."
+      },
+      "pedagogical_alignment": {
+        "pass": false,
+        "notes": "As written the students follow a fixed high-risk assembly recipe with no stated design decisions, and 'unsupervised' removes the instructor scaffolding and safety coaching that productive struggle depends on. No room for iterative, low-stakes failure -- failure modes here are injuries, not learning moments."
+      }
+    },
+    "blocking_issues": [
+      "Class 4 CO2 laser exposure risk (invisible 10.6 um beam, specular reflection off sheet metal) with 4th graders -- causes immediate permanent eye injury and cannot be mitigated to an acceptable level for this age band.",
+      "The word 'unsupervised' is a categorical non-starter: 9-year-olds cannot be left alone with any powered cutting equipment, let alone a laser and a 15-30 kV power supply.",
+      "Lethal high-voltage laser power supply assembly requires licensed/qualified personnel; no typical STEM is FUN instructor is qualified to supervise or perform it.",
+      "Equipment is exotic and expensive (laser tube, optics, gantry/controller, chiller, ducted fume extraction) -- well outside an afterschool program's sourcing path.",
+      "Technically impossible as specified: a CO2 laser does not engrave bare sheet metal; metal marking requires a fiber laser or a coating step.",
+      "45 minutes is off by orders of magnitude for a from-raw-parts laser build plus optical alignment."
+    ],
+    "open_questions": [],
+    "suggested_changes": []
+  }
+}

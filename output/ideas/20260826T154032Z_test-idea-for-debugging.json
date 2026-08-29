@@ -1,0 +1,52 @@
+{
+  "idea": "test idea for debugging",
+  "assessment": {
+    "summary": "The submission contains no actual project concept \u2014 only the placeholder text \"test idea for debugging.\" There is no topic, grade band, materials list, or activity described, so no rubric dimension can be evaluated.",
+    "verdict": "needs_more_info",
+    "checks": {
+      "grade_level_fit": {
+        "pass": false,
+        "notes": "No age or grade band is stated or implied, and with no subject matter at all there is nothing from which to infer one."
+      },
+      "materials_feasibility": {
+        "pass": false,
+        "notes": "No materials, kits, or supplies are mentioned, and no activity is described from which required materials could be estimated."
+      },
+      "instructor_capability": {
+        "pass": false,
+        "notes": "No content domain is given, so it is impossible to judge whether a non-specialist instructor could teach it with reasonable prep."
+      },
+      "ai_assistance_value": {
+        "pass": false,
+        "notes": "There is no topic for Claude to generate code, worksheets, explanations, or scaffolded challenges against; a placeholder string provides nothing to author from."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "No session count, duration, or deliverable is described, so fit to a single session or short multi-week unit cannot be assessed."
+      },
+      "safety": {
+        "pass": false,
+        "notes": "No activity, tools, materials, or grade band are specified, so electrical, chemical, heat, or sharp-tool risks cannot be screened either way."
+      },
+      "pedagogical_alignment": {
+        "pass": false,
+        "notes": "No student activity or decision points are described, so there is no way to tell whether the idea allows productive struggle and hands-on building."
+      }
+    },
+    "blocking_issues": [
+      "The submission is a placeholder string with no STEM project concept in it \u2014 there is nothing to screen. Nothing can enter the authoring pipeline until an actual idea is submitted."
+    ],
+    "open_questions": [
+      "What is the actual project? Name the topic and what students will build, program, or investigate.",
+      "What age or grade band is it intended for (e.g. grades 3-5, 6-8, 9-12)?",
+      "What materials or kits would it use, and does the program already own them (e.g. Arduino kits, breadboards, craft supplies, laptops)?",
+      "How many sessions and how long is each session?",
+      "What is the concrete student deliverable or demo at the end?",
+      "Are there any tools, heat sources, chemicals, or mains electricity involved that would need safety mitigation?"
+    ],
+    "suggested_changes": [
+      "Resubmit with a real project description covering, at minimum: the topic and student build, the target grade band, the materials required, and the number/length of sessions.",
+      "If this was submitted as a pipeline smoke test, use a realistic sample idea (e.g. \"Arduino LED reaction-time game, grades 6-8, four 90-minute sessions, using our existing Arduino Uno starter kits\") so the screening path is exercised with evaluable content."
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "idea": "Day 5\nFinal Assembly & Testing\nSTEM is Fun\nFinal Code Updates!!\nReview\nTesting!!\nFinal Assembly!!\nRobot Arm Build Time!\nEntering the Assembly Environment...\nUse 2 of the sharp/long screws to mount a servo in this rotating piece.\nThe output gear on the servo should be aligned to the hinge bump on the opposite side.\nFeed the wires through the channels into the control box.\nThis is the shoulder  servo. It connects to digital pin 5.\nMake sure that there is some slack in the wire for servo movement.\nStep 9\nAdd the shoulder piece, snapping it over the hinge bump on the opposite edge.\nUse a machine screw to mount a servo horn to the servo.\nKeep the orientation as vertical as possible, as this is the 90-degree position.\nEverything should be very snug when properly aligned and there should be very little movement in the connection.\nStep 10\nUse two sharp/long screws to mount a servo to the shoulder piece. \nThe output gear on the servo should be aligned to the hinge bump on the opposite side.\nThis is the elbow servo. It connects to digital pin 4.\nRun the wires through the openings to keep things tidy.\nLeave enough slack for movement.\nStep 11\nDo the process again for the wrist. \nMount the segment to the servo below with a servo arm\nMount a servo in this segment.\nThe wrist servo connects to digital pin 3.\nRoute the wires through the channels, and keep some slack for movement.\nUse one of the servo wire extenders!\nKeep the output gear aligned to the hinge bump on the opposite side. \nContinue building vertically.\nStep 12\nMount the finger gripper segment to the servo below with the matching horn.  \nMount a servo in the gripper piece as shown. \nRun the wires through the openings to keep things tidy.\nThis is the grip servo. It connects to pin 2.\nKeep slack on the wires. Use an extender!\nContinue building vertically.\nStep 13\nMount the other end of the gripper to the servo on the gripper. \nUse one of the longer servo horns, it should be a very snug fit.\nBuild the gripper in the closed position.\nStep 14\nSnap the control panel in place, and connect the external power adaptor.\nDon\u2019t try to use the USB power \u2013 the arm draws too much current for this.\nYour arm will boot up, and is ready to use!\nStep 19\nBlue and Gold Template\nControls\n12\nLunch!!\nNext up: More Build & Test Time\nMore Build & Test Time!!\nWhat can we make our robotic arm do?\nRobots Can Do Complex Tasks\nIf our robotic arm is simply controlled by joysticks, is it really a robot?\n\nWhat if we can \u201cprogram\u201d the movements into it, and let it move on it\u2019s own?\nWhat Is EEPROM?\nPermanent memory you can write from code \u2014 keeps its data even after the Arduino is unplugged.\nFast to read and write\nErased when power is turned off\nLike a whiteboard: easy to change, but wiped every night\nSurvives power off and reboot\nLimited writes (~100,000 per address)\nLike a notebook: keeps notes even after you close it\n#include <EEPROM.h>    // built-in, no install\nEEPROM.put(address, data);  // save data at address\nEEPROM.get(address, data);  // read data from address\nStep 1: Save Positions (Button Press)\nEach button press saves all 5 servo positions as one \"frame\" in EEPROM.\nCount\nHow many frames saved\nFrame 1\n5 servo positions (10 bytes)\nFrame 2\n5 more positions\nFrame 3\n...and so on\nif (joy1_btn == 0) {\n\n  // Save count to address 0\n  EEPROM.put(0, ee_size);\n\n  // Save pos[] array\n  EEPROM.put(ee_address, pos);\n\n  ee_size += 1;\n  ee_address += 10;  // 5 ints x 2 bytes\n  while (joy1_btn ==0) {\n     joy1_btn = digitalRead(JOY1_BUTTON_PIN);\n     delay 50; \n  }\n\n}\nEach int is 2 bytes. 5 servo positions = 10 bytes per frame. The address jumps by 10 each time.\nStep 2: Replay Saved Movements\nRead each saved frame and walk every servo to its target \u2014 one degree at a time.\nRead ee_size from EEPROM\nReset address to 2 (skip count)\nFor each saved frame:\nload 5 positions from EEPROM\nwalk each servo to its target\nbump address by 10 bytes\nif (joy4.btn.pressed) {\n  EEPROM.get(EE_SIZE_ADDRESS, ee_size);\n  ee_address = 2;\n  for (int i=0; i<ee_size; i++) {\n    EEPROM.get(ee_address, new_pos);\n    for (int j=0; j<5; j++) {\n      while (pos[j] > new_pos[j]) {\n        pos[j]--; arm_servos[j].write(pos[j]);\n        delay(50); }\n      while (pos[j] < new_pos[j]) {\n        pos[j]++; arm_servos[j].write(pos[j]);\n        delay(50); }\n    }\n    ee_address += 10;\n  }\n}\nTwo while loops nudge each servo down or up by one degree, with a tiny delay(50) \u2014 that pause is what makes the motion look smooth.\nCan you program your arm to pick up an object, and place it safely in a container?\nTwo player challenge:\u000bCan you bring balance to the force?\nCan you use one arm to control another arm???\nCan you pass an object between two arms?\nButton3\n\nChange speed from fast to slow\nTwo player challenge:\u000bCan you bring balance to the force?\nFound the box? Place the item!\nOnce you know where the box is - how can you drop an item in it?\n// rotate slowly to box location\nwhile (pos[4] > box_center) {\n   pos[4]--;\n   arm_servos[4].write(pos[4]);                           \n   delay(10);\n}\n\n// move elbow and wrist to directly above the box\npos[2] = 164;\narm_servos[2].write(pos[2]);              \n\npos[1] = 107;\narm_servos[1].write(pos[1]);              \n\n\n// Open the grip\npos[0] = max_pos[0];\narm_servos[0].write(max_pos[0]);\nPutting exact coordinates for the wrist and elbow in the code works, but they might be different for everyone.   \nIs there a better way to do this?\nCan we save this information in EEPROM?\nRobot Complete!\nWarning!  Do not leave your robot arm in a hot car!\n\nThe plastic parts are PLA - they will melt and deform.\nWrap-Up Survey!!\nThank you!!!",
+  "assessment": {
+    "summary": "[MOCK_MODE] placeholder text -- no API call was made.",
+    "verdict": "needs_more_info",
+    "overall_score": 59,
+    "safety_override": false,
+    "checks": {
+      "pedagogical_alignment": {
+        "score": 80,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 22
+      },
+      "grade_level_fit": {
+        "score": 69,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 20
+      },
+      "materials_feasibility": {
+        "score": 76,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 18
+      },
+      "time_scope_fit": {
+        "score": 70,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "instructor_capability": {
+        "score": 11,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "ai_assistance_value": {
+        "score": 21,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 10
+      },
+      "safety": {
+        "score": 89,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": null
+      }
+    },
+    "blocking_issues": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "open_questions": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "suggested_changes": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "mock": true
+  }
+}

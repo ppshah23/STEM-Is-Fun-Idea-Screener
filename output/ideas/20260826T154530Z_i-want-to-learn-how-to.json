@@ -1,0 +1,51 @@
+{
+  "idea": "I want to learn how to create a robot arm with servos and joysticks.",
+  "assessment": {
+    "summary": "A servo-driven robot arm controlled by joysticks is a strong, well-trodden afterschool build with cheap kit hardware and clear scaffolding potential, but the proposal states no grade band, no session count, and no indication of what hardware is already on hand.",
+    "verdict": "needs_more_info",
+    "checks": {
+      "grade_level_fit": {
+        "pass": false,
+        "notes": "No age or grade band is stated or implied. The idea is achievable somewhere between roughly grade 5 and 12, but the design differs sharply: younger students need a pre-assembled arm with fill-in-the-blank code, while high schoolers can wire servos, read analog joystick values, and handle multi-axis inverse-ish control. Cannot pass until the band is named."
+      },
+      "materials_feasibility": {
+        "pass": true,
+        "notes": "Micro/SG90 or MG996R servos, 2-axis thumbstick modules, an Arduino Uno or ESP32, a breadboard, and a laser-cut/cardboard/3D-printed arm frame are all commodity items typically already in an afterschool kit or sourceable for well under $40 per station. An external 5-6V battery pack or bench supply for the servos is the only item programs sometimes lack."
+      },
+      "instructor_capability": {
+        "pass": true,
+        "notes": "Servo.write() plus analogRead() on a joystick potentiometer is standard entry-level Arduino work. A non-specialist instructor can prep this from a working reference build; no specialist skill is needed. Only real prep demand is understanding why servos need their own power rail and a common ground."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "High leverage for Claude: sketch code with progressive stages (one servo, then joystick-mapped, then two-axis, then position recording/playback), calibration and mapping worksheets, servo-jitter and brownout debugging guides, wiring diagram descriptions, and design-challenge prompts (gripper payload, reach vs. torque tradeoff)."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "No session count or total time is given. A joystick-controlled multi-joint arm from bare parts realistically needs 4-6 sessions; it does not fit a single 60-90 minute session unless the arm frame arrives pre-assembled and the scope is cut to controlling 1-2 joints."
+      },
+      "safety": {
+        "pass": true,
+        "notes": "Low-voltage DC only, so no shock hazard. Manageable risks are pinch points from geared servos (especially MG996R-class), hot-glue burns during frame assembly, and shorting a battery pack; all are mitigable with standard afterschool rules and do not need special certification."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "Naturally supports productive struggle: mapping raw joystick range to servo angles, dealing with jitter and deadzones, and the mechanical tradeoff between reach and holding torque all present real decision points rather than a fixed recipe."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "What grade or age band is this for? (This determines whether students wire and code from scratch or work from a pre-assembled arm with scaffolded code.)",
+      "How many sessions and how long is each session?",
+      "Which microcontroller platform does the program already own -- Arduino Uno, ESP32, micro:bit, or none yet?",
+      "Will the arm structure be built by students (cardboard, popsicle sticks, laser-cut acrylic) or purchased as a pre-made servo-bracket/3D-printed kit?",
+      "How many degrees of freedom is the target -- 2 joints, 3 joints plus a gripper, or open-ended?",
+      "What is the per-student or per-team materials budget, and is it one arm per team of 2-3 or one per student?"
+    ],
+    "suggested_changes": [
+      "State the grade band, then set degrees of freedom to match: 2 servos plus one joystick for middle school, 3-4 servos plus a gripper for high school.",
+      "Specify session count; if only 1-2 sessions are available, supply pre-assembled arm frames and limit the build to wiring and joystick-to-servo mapping.",
+      "Budget for a dedicated 4xAA or 5V 2A supply for the servo rail (common ground with the microcontroller) so servo current draw doesn't reset the board mid-demo."
+    ]
+  }
+}

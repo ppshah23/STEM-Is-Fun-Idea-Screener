@@ -1,0 +1,66 @@
+{
+  "idea": "Day 1\nRobotics Basics, Electronics 101 & Arduino 101\nSTEM is Fun\nKitara Crain\nEngineering Degree\nBS Electrical Engineering - Purdue University\nCoolest Project\nI\u2019m building an app to analyze your closet and help a person pick out their clothing for the week or for a trip\n8 red -3 blue\n=5 red\n\n8-3=5\n+          \u2192           +\nFull week overview\nRobotics & Control Systems\nRobotics Basics\nElectronics 101\nArduino 101\nLED circuit build\nArduino LED circuit build + coding\nMotion & Servo Control\nServos Basics\nJoystick Basics\nControlling Servos w/ Joysticks\nBuilding servo circuits + writing code\nWriting code for joystick movements\nBuilding joystick + servo circuits\nSystems Integration\nWhy use arrays??\nLCD Display Basics\nWrite code using arrays to control multiple components\nBuild an LCD display into your servo code\nSensors\nSensors Basics\nDistance Sensors & Robotics\nTesting various sensors\nBuilding circuit + code for distance sensor to control the robotic arm\nFinal Build\nAssembly\nTesting\nFinal arm assembly\nFinal code development\nTesting\nElectronics 101\nArduino 101\nThe Project\nWhat is Robotics??\nWhat is a robot?\nIntro to Robotics!!\nThe Project\nWhat are examples of robots already being used in the real world??\nSurgical Robots\nKelsey L. Adams, US Navy via Flickr under CC BY-SA 2.0\nProduce Picking Robots\nPainting Robots\nFood Prep Robots\nVoltage Source\nSwitch\nLight\nWire\nElectronics 101\nWhat are the 3 components of electricity that control how electrons flow?\nElectricity is like a water hose\u2026\nLet\u2019s Build an LED Circuit\nLet\u2019s Build an LED Circuit\nCan you find the mistake in the following circuit?\n+\n-\nLet\u2019s add a switch!!\nHow does a switch or button work when connected to an electrical circuit??\nUsing a Breadboard\nThis is a critical component used to make building circuits easier and cleaner\nConnect Your Circuit Using a \nBreadboard\nArduino 101\nArduino Code\nWhat is your favorite software you use everyday?\nWhat are some differences between these software examples and our project?\nWe call this\u2026\nEmbedded Software\nWater Kettle\nSmart Scale\nYour controller will be using \nsomething similar to these components\u2026\nHow to Build an LED Circuit with \nan Arduino\nConnecting your LED to your Arduino\nDigital Pin 7\nGND (ground)\nWhat task will our Arduino perform for our project?\n#define\n// Comment \u2192 Description\nvoid setup()     \n{\n \n}\n// Comment \u2192 Description\n\u2026initialize your electronics here\u2026\nvoid loop()     \n{\n\n\n\n\n}\nNAME     PIN #\n// Comment \u2192 Description\n\u2026write the code you want here\u2026\n \u2026this will do stuff\u2026\n \u2026turn on buttons\u2026\n \u2026turn on lights\u2026\nParts of a \nSoftware Program\ntype    variable    value  ;\nReviewing the Terms\nLive Demo Time!\nEntering the Arduino Environment...\n#define\n// Power On LED\nvoid setup()     \n{\n \n}\n// Setup Section\npinMode(LED_RED, OUTPUT);\nvoid loop()     \n{\n\n\n\n\n}\nLED_RED 7\n// Run Code\ndigitalWrite(LED_RED, HIGH);\n delay(500);\n digitalWrite(LED_RED, LOW) ;\n delay(500);\nHow to build a\nSoftware Program\nYou\u2019ve written your first arduino program (sketch) of the camp!\n\nUse \u201cFile->Save As\u201d to save your sketch so you can refer to it later!\n\nUse \u201cFile -> New Sketch\u201d to start a new one!\nBuild your Own 3-LED Circuit\n#define\n// Power On LED 1\nvoid setup()     \n{\n \n\n\n}\n// Setup Section\npinMode(LED_RED, OUTPUT);\n pinMode(LED_YELLOW, OUTPUT);\n pinMode(LED_GREEN, OUTPUT);\nvoid loop()     \n{\n\n\n\n\n\n\n\n\n}\nLED_RED    11\ndigitalWrite(LED_RED, HIGH);\n digitalWrite(LED_YELLOW, LOW);\n digitalWrite(LED_GREEN, HIGH);\n delay(500);\n digitalWrite(LED_RED, LOW);\n digitalWrite(LED_YELLOW, HIGH);\n digitalWrite(LED_GREEN, LOW);\n delay(500);\n#define  LED_YELLOW 10  // Power On LED 2\n#define  LED_GREEN  9   // Power On LED 3\nLunch!!\nNext up: Programming w/ an Arduino\nHow should we add a switch or button to this circuit?\nAdding a Button\nAny ideas how we would write the code for this circuit?\n#define\n// Button Pin\nvoid setup()     \n{\n \n}\n// Setup Section\npinMode(BUTTON_PIN, OUTPUT);\nBUTTON_PIN 2\nvoid loop()     \n{\n\n\n}\n// Run Code\ndigitalWrite(BUTTON_PIN, HIGH);\n delay(1000);\nOur current build uses a button as a \u201cswitch\u201d that allows electricity to flow to the LED when pressed. \n\nHow would we alter this circuit and code if we want to READ the button and then WRITE to the LED?\nElectrical Concept: Floating Inputs\nElectrical Concept: Pull Down Resistor\nStep 1: \nAdd LED Pin #\nStep 2: \nAdd Button Pin #\nStep 3: \nAdd pinMode Controls\nHow to Use an \u201cIf-Statement\u201d\nStep 4: \nAdd If-Statement Framework\nStep 5: \nAdd Conditional Statement\nStep 6: \nAdd button_state\n(not actually using it yet\u2026)\nStep 7: \nUse button_state Variable\nCHALLENGE:\n\n1. Build a circuit that can connect 2 buttons to 2 LEDs! \n2. Choose a different LED color to correlate to each button\n3. Use the LED and button colors in the variable name\nNOT PART OF PRESENTATION\u2026USED FOR CHECKING SOLUTION\n#define BUTTON_RED  2\n#define BUTTON_BLUE 3\n\n#define LED_RED  8\n#define LED_BLUE 9\n\nbool button_state_red;\nbool button_state_blue;\n\n\nvoid setup()\n{\n  pinMode(BUTTON_RED,  INPUT);\n  pinMode(BUTTON_BLUE, INPUT);\n  pinMode(LED_RED,  OUTPUT);\n  pinMode(LED_BLUE, OUTPUT);\n}\n\nvoid loop()\n{\n  button_state_red  = digitalRead(BUTTON_RED);\n  button_state_blue = digitalRead(BUTTON_BLUE);\n  \n  if (button_state_red == HIGH) {\n     digitalWrite(LED_RED, HIGH);\n  } else {\n     digitalWrite(LED_RED, LOW);\n  }\n\n  if (button_state_blue == HIGH) {\n     digitalWrite(LED_BLUE, HIGH);\n  } else {\n     digitalWrite(LED_BLUE, LOW);\n  }\n\n  delay(100);\n}\nDon\u2019t take your LED + button circuit apart, we will use it again tomorrow!\n\nSave your code!\nWrap-Up Survey!!\nUp Next\nRobotics & Control Systems\nRobotics Basics\nElectronics 101\nArduino 101\nLED circuit build\nArduino LED circuit build + coding\nMotion & Servo Control\nServos Basics\nJoystick Basics\nControlling Servos w/ Joysticks\nBuilding servo circuits + writing code\nWriting code for joystick movements\nBuilding joystick + servo circuits\nSystems Integration\nWhy use arrays??\nLCD Display Basics\nWrite code using arrays to control multiple components\nBuild an LCD display into your servo code\nSensors\nSensors Basics\nDistance Sensors & Robotics\nTesting various sensors\nBuilding circuit + code for distance sensor to control the robotic arm\nFinal Build\nAssembly\nTesting\nFinal arm assembly\nFinal code development\nTesting",
+  "assessment": {
+    "summary": "[MOCK_MODE] placeholder text -- no API call was made.",
+    "verdict": "not_feasible",
+    "overall_score": 15,
+    "safety_override": true,
+    "checks": {
+      "pedagogical_alignment": {
+        "score": 42,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 22
+      },
+      "grade_level_fit": {
+        "score": 76,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 20
+      },
+      "materials_feasibility": {
+        "score": 5,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 18
+      },
+      "time_scope_fit": {
+        "score": 42,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "instructor_capability": {
+        "score": 14,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "ai_assistance_value": {
+        "score": 53,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 10
+      },
+      "safety": {
+        "score": 21,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": null
+      }
+    },
+    "blocking_issues": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "open_questions": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "suggested_changes": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "mock": true
+  }
+}

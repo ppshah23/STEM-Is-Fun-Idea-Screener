@@ -1,0 +1,49 @@
+{
+  "idea": "For our existing 45-minute afterschool STEM club (grades 6-8, groups of 2-3 sharing one Arduino Uno kit we already own), teach a single-session activity where students wire a red/yellow/green LED stoplight sequence and add a pushbutton for a pedestrian-crossing request, using the breadboard, LEDs, resistors, and pushbutton already in our kits.",
+  "assessment": {
+    "summary": "A well-specified single-session Arduino stoplight-plus-pedestrian-button activity for grades 6-8 using kits the club already owns; the concept, materials, and safety profile are all sound. The only real risk is fitting wiring, coding, and debugging into 45 minutes, which should be handled by staging the build into a core task plus an extension.",
+    "verdict": "feasible_with_changes",
+    "checks": {
+      "grade_level_fit": {
+        "pass": true,
+        "notes": "Grades 6-8 stated explicitly. Breadboard wiring of three LEDs with current-limiting resistors, a pushbutton, and digitalWrite/delay-style sequencing is a standard, achievable middle-school Arduino task, especially in groups of 2-3."
+      },
+      "materials_feasibility": {
+        "pass": true,
+        "notes": "Everything named (Arduino Uno, breadboard, LEDs, resistors, pushbutton, jumper wires) is stated as already in kits the club owns. Nothing exotic. One unstated dependency: computers/laptops with the Arduino IDE installed and USB cables, one per group; the club presumably has these but it isn't confirmed."
+      },
+      "instructor_capability": {
+        "pass": true,
+        "notes": "No specialist expertise required. A non-specialist can prep by building the circuit once beforehand and rehearsing the sketch upload. Common failure modes (LED polarity, missing resistor, floating button input, wrong pin number in code) are well-documented and easy to pre-brief."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "High value: Claude can generate the starter and solution sketches, a wiring diagram description and pin map, a debugging flowchart, a pedestrian-request state-logic worksheet, slide content, and tiered extension challenges (blinking walk timer, yellow-flash mode, debounce)."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "Single-session framing is correct for an afterschool club, but 45 minutes is tight for novice groups to wire five components, write/upload code, and debug. Wiring alone commonly consumes 20-25 minutes for first-time breadboard users. The idea also doesn't state whether these students have prior Arduino/coding experience, which determines whether the pushbutton half is realistic or aspirational."
+      },
+      "safety": {
+        "pass": true,
+        "notes": "5V USB-powered, low-current DC only; no mains electricity, heat, chemicals, or sharp tools. Standard mitigations suffice: no soldering, unplug USB before rewiring, use the correct resistor value (220-330 ohm) so LEDs aren't driven directly off a pin."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "Strong fit. The stoplight sequence gives a concrete, testable goal, and the pedestrian request naturally introduces input-driven state changes, timing decisions, and design tradeoffs (how long is the walk phase? does the button interrupt immediately or wait for the cycle?) rather than a fixed recipe. Debugging a non-lighting LED is exactly the productive struggle the program wants."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "Have these students used the Arduino IDE and a breadboard before, or is this their first Arduino session? This determines whether the pushbutton portion is a core task or an extension.",
+      "How many laptops/computers with the Arduino IDE installed and USB cables are available relative to the number of 2-3 student groups?",
+      "Roughly how many students/groups will attend, so kit sharing and instructor circulation time can be estimated?"
+    ],
+    "suggested_changes": [
+      "Stage the session to fit 45 minutes: make the three-LED timed stoplight sequence the required core outcome (~30 min), and treat the pedestrian pushbutton as the stretch goal for groups that finish early, with a full solution shared at wrap-up so no group leaves without seeing it.",
+      "Provide a pre-written, pre-tested starter sketch with pin constants already declared and clearly marked TODO sections, so class time goes to circuit building and logic decisions rather than typing boilerplate.",
+      "Pre-load the Arduino IDE with the correct board/port settings on each laptop before students arrive, and have one fully built reference circuit on the instructor table for groups to compare against.",
+      "If students are Arduino beginners, either drop the pushbutton entirely from the single session or split the idea into a two-week unit (week 1: stoplight sequence; week 2: pushbutton and pedestrian logic)."
+    ]
+  }
+}

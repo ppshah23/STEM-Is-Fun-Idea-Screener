@@ -1,0 +1,25 @@
+{
+  "course_id": "arduino-digital-io",
+  "title": "Arduino Basics: Digital Input & Output",
+  "learning_objective": "Students can write and explain an Arduino program that reads a digital input (a button) and controls a digital output (an LED) based on that input.",
+  "target_grade_band_original": "high school (9-12)",
+  "sections": [
+    {
+      "title": "What is a microcontroller?",
+      "content": "An Arduino is a small computer that runs one program in a loop, reading inputs and controlling outputs in real time. Unlike a laptop, it has no operating system to switch between — it just runs your code, forever, from the moment it powers on."
+    },
+    {
+      "title": "Digital output: blinking an LED",
+      "content": "digitalWrite(pin, HIGH) sends 5V to a pin; digitalWrite(pin, LOW) sends 0V. Wiring an LED with a current-limiting resistor to a digital pin lets code turn it on and off. The classic first program (Blink) toggles a pin HIGH and LOW with delay() calls in loop()."
+    },
+    {
+      "title": "Digital input: reading a button",
+      "content": "pinMode(pin, INPUT_PULLUP) configures a pin to read a button press, using the Arduino's internal pull-up resistor so the pin reads HIGH when unpressed and LOW when pressed. digitalRead(pin) returns the current state."
+    },
+    {
+      "title": "Combining input and output: button-controlled LED",
+      "content": "Reading the button state each loop() iteration and using an if statement to set the LED pin HIGH or LOW accordingly is the first program that connects input to output — the foundation for every more complex Arduino project."
+    }
+  ],
+  "prior_versions": []
+}

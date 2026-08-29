@@ -1,0 +1,52 @@
+{
+  "idea": "Teach grades 6-8 in our 45-minute afterschool club to build a simple line-following robot using the Arduino kits we already own.",
+  "assessment": {
+    "summary": "Building a line-following robot with grades 6-8 on existing Arduino kits is a well-matched, high-value idea for this program, but two critical facts are missing: how many 45-minute sessions the unit gets, and whether the existing kits actually contain the chassis, motors, motor driver, and IR reflectance sensors a line follower requires. It cannot be authored as a single 45-minute session.",
+    "verdict": "needs_more_info",
+    "checks": {
+      "grade_level_fit": {
+        "pass": true,
+        "notes": "Grades 6-8 stated explicitly. Middle school is a good fit for block- or C++-based Arduino work, basic circuits, and iterative sensor calibration; the concept of 'sense, decide, act' is age-appropriate."
+      },
+      "materials_feasibility": {
+        "pass": false,
+        "notes": "'The Arduino kits we already own' is not specific enough. A line follower needs, beyond an Arduino board: a chassis, 2 DC gear motors + wheels, a motor driver (L298N/TB6612 or a motor shield), 2+ IR reflectance sensors (e.g. TCRT5000 or a QTR array), battery holder/pack, and a track surface (black electrical tape on white poster board). Common Uno starter kits include LEDs, servos, and jumper wires but no chassis, motor driver, or IR sensors, so a purchase may be required. Quantity per team is also unstated."
+      },
+      "instructor_capability": {
+        "pass": true,
+        "notes": "Teachable by a non-specialist with prep: the wiring is solderless breadboard/screw-terminal level and the code is a short if/else loop. Prep requirement is real but reasonable \u2014 the instructor should build one working reference robot in advance and pre-test motor polarity and sensor thresholds."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "Strong fit for the pipeline. Claude can author the sketch in scaffolded stages (motor test, sensor read/serial print, threshold calibration, full follow loop), wiring diagrams described step-by-step, debugging flowcharts, calibration worksheets, and extension challenges (speed tuning, handling sharp turns, line gaps)."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "Number of sessions is not stated \u2014 only that each session is 45 minutes. A full line-following robot (assembly + wiring + motor test + sensor calibration + control logic + testing) cannot be completed in one 45-minute block by middle schoolers; realistically 3-5 sessions of 45 minutes, or 1-2 sessions if robots are pre-assembled and students only write/tune the code."
+      },
+      "safety": {
+        "pass": true,
+        "notes": "Low risk at 5V/battery-powered DC with no heat or chemicals. Standard mitigations to specify in the course: solderless construction only (no soldering iron with this age band), use AA/NiMH or a USB power bank rather than bare LiPo cells, supervise any use of wire strippers or hobby knives for track prep, and warn about short circuits and reversed battery polarity."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "Excellent room for productive struggle: students must choose sensor placement, determine threshold values empirically for their own room lighting, and tune turn/speed behavior. Course track design and iterative test-and-fix loops give clear decision points rather than a fixed recipe."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "How many 45-minute sessions is this unit allotted (single session, or a multi-week block of 3-5)?",
+      "What exactly is in the Arduino kits you own \u2014 specifically, do they include a chassis, DC gear motors and wheels, a motor driver/shield (L298N, TB6612, or motor shield), and IR reflectance sensors? Please list the kit brand/model if possible.",
+      "How many kits are available, and what is the expected number of students and team size (students per robot)?",
+      "Is there any budget to purchase missing parts (IR sensor modules and motor drivers are roughly $2-8 each), and what is the lead time before the club starts?",
+      "Are robot chassis pre-assembled between sessions or must students break down and rebuild each week (affects how much build time each session loses)?"
+    ],
+    "suggested_changes": [
+      "Confirm or scope the unit as a 3-5 session arc (e.g. S1: chassis assembly + motor test; S2: IR sensor reading and calibration; S3: control logic; S4: tuning and a timed course challenge) rather than a single 45-minute session.",
+      "If only one or two sessions are available, narrow the scope: pre-assemble and pre-wire the robots so students focus entirely on reading sensor values, setting thresholds, and writing/tuning the follow logic.",
+      "Inventory the existing kits against a parts checklist and order the likely gaps (IR reflectance sensors, motor driver boards, chassis + gear motors + battery holders) before authoring begins.",
+      "Specify solderless construction and non-LiPo power (AA pack or USB power bank) in the course requirements so the safety mitigation is baked in.",
+      "Plan the track material (black electrical tape on white poster board or vinyl) and pre-cut it, since track prep can consume a whole 45-minute block."
+    ]
+  }
+}

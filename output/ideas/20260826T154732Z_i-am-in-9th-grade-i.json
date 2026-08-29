@@ -1,0 +1,55 @@
+{
+  "idea": "I am in 9th grade, I have a week to learn this project, I have an Arduino Uno, we have a 3D-printed kit, and it's open ended",
+  "assessment": {
+    "summary": "The prompter has supplied constraints (9th grade, one week, Arduino Uno, a 3D-printed kit, open-ended) but no actual project \u2014 there is no stated topic, build target, or learning goal to screen. The constraints are promising and typical of a workable Arduino unit, but a course cannot be authored from constraints alone.",
+    "verdict": "needs_more_info",
+    "checks": {
+      "grade_level_fit": {
+        "pass": true,
+        "notes": "9th grade is explicitly stated. Arduino Uno programming in C/C++ (or block-based), basic circuits, and sensor/actuator projects are all well within reach for 9th graders with scaffolding, so a plausible grade band exists."
+      },
+      "materials_feasibility": {
+        "pass": false,
+        "notes": "An Arduino Uno is a standard, affordable platform, but '3D-printed kit' is not identifiable \u2014 it is unknown whether it is a robot chassis, a mechanical arm, an enclosure set, or something else, and it is unknown whether the supporting electronics (breadboard, jumper wires, resistors, LEDs, servos/DC motors, motor driver, sensors, USB cable, external power) are on hand. Cannot confirm the project can be built until the kit contents and electronics inventory are named."
+      },
+      "instructor_capability": {
+        "pass": false,
+        "notes": "Cannot be judged because no project is specified. Whether a non-specialist can teach this depends entirely on the build: blinking LEDs and a servo sweep need almost no prep, whereas a PID line-follower, I2C sensor fusion, or a custom PCB would need real embedded-systems experience. Also unstated is whether the learner is self-directed or an instructor is leading a group."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "Arduino work is a strong fit for AI-assisted authoring regardless of the specific build: Claude can generate wiring diagrams described in text, sketch code with progressive scaffolding, debugging checklists, common-error guides, worksheets, and extension challenges. This dimension passes on the platform alone."
+      },
+      "time_scope_fit": {
+        "pass": false,
+        "notes": "'A week' is stated but not quantified. Unknown how many sessions and how long each is (e.g., five 60-minute afterschool sessions vs. one 2-hour session vs. full-day camp), and with no defined project there is no scope to compare against the available time. A week of afterschool sessions is a plausible short-unit format, so this is a missing-information fail rather than a structural mismatch."
+      },
+      "safety": {
+        "pass": false,
+        "notes": "Baseline Arduino Uno work at 5V USB power is low-risk and appropriate for 9th grade, but the unspecified project leaves open the specific hazards that would need mitigation: soldering iron use, hot-glue or 3D-printer bed contact, LiPo/9V battery handling, motors with pinch points, or any mains-voltage element. Cannot clear until the build is named and any soldering/heat/battery steps are confirmed or ruled out."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "The prompter explicitly says the project is open-ended, which leaves room for design decisions, iteration, and productive struggle rather than a fixed recipe. This aligns well with STEM is FUN's hands-on approach, though the open-endedness also means the goal must be pinned down before authoring."
+      }
+    },
+    "blocking_issues": [
+      "No project is actually proposed \\u2014 the submission lists available resources and constraints but names no build target, phenomenon, or learning objective, so there is nothing to screen or author against."
+    ],
+    "open_questions": [
+      "What is the actual project or build target? (e.g., obstacle-avoiding robot, automated plant waterer, reaction-timer game, sensor-driven data logger)",
+      "What exactly is the '3D-printed kit'? Name the kit or list its parts (chassis, gears, arm segments, enclosure) and whether it is already assembled or must be assembled during the week.",
+      "What supporting electronics are on hand? Specifically: breadboard, jumper wires, resistors, LEDs, servos or DC motors, motor driver board, any sensors (ultrasonic, IR, temperature, light), USB cable, and battery pack.",
+      "How many sessions in the week and how long is each session?",
+      "Is this a self-directed learner working alone, or an instructor-led group? If a group, how many students and how many Arduino/kit sets are available?",
+      "Does the learner or class have any prior Arduino, coding, or breadboarding experience?",
+      "Will soldering, hot glue, or operating the 3D printer be part of the activity, or are all parts pre-printed and all connections solderless?"
+    ],
+    "suggested_changes": [
+      "State a concrete build target that uses both the Arduino and the 3D-printed parts \\u2014 for example, 'a 3D-printed robot arm with two servos controlled by potentiometers' \\u2014 so the scope, materials, and safety profile can be evaluated.",
+      "List the exact contents of the 3D-printed kit and the electronics bin, so materials feasibility can be confirmed rather than assumed.",
+      "Specify the number and length of sessions in the week so the build can be scoped to fit.",
+      "Confirm whether all connections are solderless (breadboard/jumper wires) and that power stays at USB 5V or a low-voltage battery pack; if soldering or 3D-printer operation is involved, flag it so supervision and PPE requirements can be built into the course."
+    ]
+  }
+}

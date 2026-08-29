@@ -1,0 +1,5 @@
+anthropic
+python-pptx
+python-docx
+fastapi
+python-dotenv

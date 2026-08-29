@@ -1,0 +1,66 @@
+{
+  "idea": "Day 4\nBeginning Robot Arm Build!\nDistance Sensor Programming\nSTEM is Fun\nBegin Robot Arm Build\nReview\nDistance Sensor Programming\nSensors 101\nQuestion 1:\n\nHow do we define an array?\nWhy is it useful?\nReview - Arrays\nArrays can store any type of data - use them for pins, servos, limits, etc!\nint ledPins[3] = {2,3,4};\n\npinMode(ledPins[0], OUTPUT);\npinMode(ledPins[1], OUTPUT);\npinMode(ledPins[2], OUTPUT);\nServo myServos[3];\n\nmyServos[0].attach(pins[0]);\nmyServos[1].attach(pins[1]);\nmyServos[2].attach(pins[2]);\nQuestion 2:\n\nHow do we write to an LCD Display?\nAdding LCD to Your Servo Code\nThe LCD code slots right in alongside your existing movement code. Nothing else changes.\n#include <Wire.h>\n#include <hd44780.h>\n#include <hd44780ioClass/hd44780_I2Cexp.h>\n\nhd44780_I2Cexp lcd;\n// After writing the servo position:\nlcd.clear();\nlcd.setCursor(0, 0);\nlcd.print(\"Servo at:\");\nlcd.print(pos[0]);\nThe new lcd. lines just print after each servo move. The servo logic stays untouched.\nlcd.begin(16, 2);\nlcd.backlight();\nLet\u2019s start building our robotic arm!\nStart by attaching the control box to the platform using four nylon screws/nuts.\n\nThe built-in standoffs should be facing up.\nStep 1\nAttach the rubber feet to the underside as shown here.\n\nDo not cover any of the mounting holes.\nStep 1b\nInstall the breakout board with the attached nano into the control box using four nylon screws and nuts.\nThe ports on the board have corresponding openings in the control box.\nStep 2\nInstall the LCD display into the control panel using four nylon screws/nuts.\nNote the orientation in the picture shown.\nStep 3\nSeparate a bundle of four wires from the jumpers.\nKeep the four wires together\nConnect the I2C pins on the display to the I2C pins on the breakout board: \nGnd -> Gnd\nVcc -> 5V\nSDA -> SDA\nSCL -> SCL\nStep 4\nConnect all five servos to the digital/servo pins (2 -> 6) on the breakout board. \nBrown connects to ground, orange connects to signal.\nNow connect your USB cable and upload the Arduino code. \nThis will initialize all of the servos to a known good position (90 degrees)\nAs we build the arm this ensures we get 0-180 degrees of motion from all of them.\nStep 5\nAfter the initialization step, you will see this message (or similar).\nThis is OK, we have not installed the joysticks yet.\nStep 5b\nUsing the sharp/long screws that come with the servos, mount a servo into the base of the arm.\nThe output gear of the servo should be in the center of the base.\nStep 6\nMount the base of the arm to the platform using four nylon screws/nuts.  Use the channels provided to run the wires to the control box.\nNote the orientation, with the open portion facing the control box.\nThis is the rotation servo. It connects to digital pin 6.\nStep 7\nInsert a servo horn into the rotating platform piece (note the slots where it fits), and use one of the machine screws to attach it to the servo.\nThis screw should go in very easily - don\u2019t use a lot of force, that could strip the threads.\nPosition this piece as shown in the photo, with the open areas aligned.\nStep 8\nUse this type of servo horn.\nThe protruding center points down and fits into the opening in this piece.\nPull the caps off of the joysticks, and mount them to the small panels using four nylon screws/nuts. \nThey fit in one orientation only.\nStep 9\nPush the caps back on.\nThey are keyed to a specific orientation \u2013 rotate them until they fit comfortably.\nStep 10\nSeparate a bundle of five jumper wires and connect them to the first joystick.\nFor the other three joysticks, use a single wire on the leftmost pin, and a bundle of three wires on the three rightmost.\nPins from left to right in this orientation:\nButton | Y | X | VCC | GND.\nStep 11\nStart mounting the joysticks and connecting them to the breakout board as shown:\nJoystick 1 X pin       \tA6\nJoystick 1 Y pin       \tA7\nJoystick 1 Button pin  \t7\u000b\nJoystick 2 X pin       \tA1\nJoystick 2 Button pin  \t8\u000b\nJoystick 3 X pin       \tA2\nJoystick 3 Button pin  \t9\u000b\nJoystick 4 X pin       \tA0\nJoystick 4 Button pin \t10\nLeftmost is Joy1, rightmost is Joy4.\nThe Vcc/Gnd connections on the joystick can go to any vcc/gnd pins on the board. \nAlign them to either the analog or digital pin connection.\nStep 12\nButton | Y | X | VCC | GND.\nUse the \u201cS\u201d pins for the signal connections.\nLet\u2019s look at the code, and fill out this worksheet.\nControl Mapping\nCHALLENGE:\n\nMake joystick 1 \u201cY\u201d axis (really left<->right) control rotation.\nRead value from joystick (joy1_y), update pos[4], write to servo!\nRemember to stay within min_pos and max_pos!\nCheck your IDE\u000bfor the new\u000bchallenge!\nCHALLENGE:\n\nWhen pressing the button on Joystick two, can you make the arm rotate slowly from the min to the max position?\n\nHint\nUse a \u201cfor\u201d or \u201cwhile\u201d loop to go from min_pos[4] to max_pos[4].  Update pos[4], and write it to the servo.\nCheck your IDE\u000bfor the new\u000bchallenge!\nTime to add a sensor!\nSensors\nAll of the robots in the videos we have seen have something in common - they can \u201csense\u201d their surroundings, and act on what they find.\nSensing Distance\nDistance is easy to measure if we take some concepts from nature.\nThe speed of sound\nOur Arduino code measures microseconds, so we will us 0.034 to get centimeters/microsecond.\nAdding Sensors to Your Prototype\nThis function can be called anywhere in our code to get the current distance.\n#define ECHO_PIN 12\n#define TRIG_PIN 13\nint getDistance() {\n  // Set trigger pin on distance sensor HIGH for 10 microSeconds\n  digitalWrite(TRIG_PIN, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(TRIG_PIN, LOW);\n\n  // Read echo Pin, returns sound wave travel time in microseconds\n  duration = pulseIn(ECHO_PIN, HIGH, 20000);\n\n\n  // Calculate distance in cm\n  int dist = \u2026\n  return dist;\n}\nNo new libraries needed!\n// Clear trigPin\n  digitalWrite(TRIG_PIN, LOW);\n  delayMicroseconds(2);\nAdding Sensors to Your Prototype\nThis function can be called anywhere in our code to get the current distance.\n#define ECHO_PIN 12\n#define TRIG_PIN 13\nint getDistance() {\n  // Set trigger pin on distance sensor HIGH for 10 microSeconds\n  digitalWrite(TRIG_PIN, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(TRIG_PIN, LOW);\n\n  // Read echo Pin, returns sound wave travel time in microseconds\n  duration = pulseIn(ECHO_PIN, HIGH, 20000);\n\n\n  // Calculate distance in cm\n  int dist = \u2026\n  return dist;\n}\nNo new libraries needed!\n// Clear trigPin\n  digitalWrite(TRIG_PIN, LOW);\n  delayMicroseconds(2);\nHead over to Challenge 7\u000bin the Main Code!\nThis opening can be used to hold a distance sensor that will rotate with the arm.\n\nNow as it rotates it can \u201csee\u201d when something is directly in front of it - and interact with it!\nAdding the distance sensor\nWiring: Distance Sensor\nLCD Pin\nBreakout Board Pin\nWhat It Does\nGND\nGround\n5V\nPower\n13\nTriggers the sound\n12\nListens for the return\ndistance = getDistance();\n\n      lcd.clear(); \n      lcd.setCursor(0, 0);\n      lcd.print(\"Dist:\"); \n      lcd.print(distance);\nCHALLENGE:\n\nPressing joystick two button makes the arm slowly rotate.   Now check the distance measure at each point to find the box in front of the arm!\n\nKeep the box between 5-10 cm away.\nWhen you first find the box, set variable \u201cbox_start\u201d.\nWhen you no longer find the box, set variable \u201cbox_end\u201d.\nWhen done with scan, calculate \u201cbox_center\u201d.  Update \u201cpos[4]\u201d to box_center and write it to the servo.\nCheck your IDE\u000bfor the new\u000bchallenge!\nMore Conditionals\nConditional that you have worked with:\nif (joy2_btn == 0) {\nwhile (pos[4] < max_pos[4]) {\n\nMultiple conditions:  Use \u201c&&\u201d to mean \u201cand\u201d\u201d\nif (distance > 0 && distance <10 && box_start == 0) {\n   box_start = pos[4];\n}\nUse \u201c||\u201d to mean \u201cor\u201d:\nif (distance >10 || distance == 0) {\n\nCombine them!\nif ((distance >10 || distance == 0) && box_start > 0 && box_center == 0) {\n\nDo math in your condition!\n          if ((pos[4] - box_start) > 10) {\nbox_start set when distance between 1 & 10 cm\nbox_end set when box_start is already set and distance is no longer between 1 and 10 cm\nUsing Sensor to find the box\nif (joy2_btn == 0) {\n    box_start = 0;                        //reset box coordinates\n    box_center = 0;\n    box_end = 0;\n\n    pos[4] = min_pos[4];  \n    arm_servos[4].write(pos[4]);          // Rotate all the way to the min\n\n    while (pos[4] < max_pos[4]) {\n       pos[4]++;\n       arm_servos[4].write(pos[4]);       // Incremental servo movement\n       distance = getDistance();\n       if (distance > 0 && distance <10 && box_start == 0) {\n          box_start = pos[4];\n       }\n       if ((distance >10 || distance == 0) && box_start > 0 && box_center == 0) {\n          if ((pos[4] - box_start) > 10) {\n             box_end = pos[4];\n             box_center = (box_end - box_start)/2 + box_start;\n          } else {\n             box_start = 0;\n          }\n       }\n       delay(100);\n    }\n}\nOther popular robotics sensors\nMany other inexpensive sensors can be used with the Arduino board.\nWrap-Up Survey!!\nUp Next\nRobotics & Control Systems\nRobotics Basics\nElectronics 101\nArduino 101\nLED circuit build\nArduino LED circuit build + coding\nMotion & Servo Control\nServos Basics\nJoystick Basics\nControlling Servos w/ Joysticks\nBuilding servo circuits + writing code\nWriting code for joystick movements\nBuilding joystick + servo circuits\nSystems Integration\nWhy use arrays??\nLCD Display Basics\nWrite code using arrays to control multiple components\nBuild an LCD display into your servo code\nSensors\nSensors Basics\nDistance Sensors & Robotics\nTesting various sensors\nBuilding circuit + code for distance sensor to control the robotic arm\nFinal Build\nAssembly\nTesting\nFinal arm assembly\nFinal code development\nTesting",
+  "assessment": {
+    "summary": "[MOCK_MODE] placeholder text -- no API call was made.",
+    "verdict": "needs_more_info",
+    "overall_score": 55,
+    "safety_override": false,
+    "checks": {
+      "pedagogical_alignment": {
+        "score": 40,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 22
+      },
+      "grade_level_fit": {
+        "score": 87,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 20
+      },
+      "materials_feasibility": {
+        "score": 52,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 18
+      },
+      "time_scope_fit": {
+        "score": 66,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "instructor_capability": {
+        "score": 61,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "ai_assistance_value": {
+        "score": 0,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 10
+      },
+      "safety": {
+        "score": 97,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": null
+      }
+    },
+    "blocking_issues": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "open_questions": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "suggested_changes": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "mock": true
+  }
+}

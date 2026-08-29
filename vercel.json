@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "backend": {
+      "root": ".",
+      "entrypoint": "app:app",
+      "functions": {
+        "app.py": {
+          "excludeFiles": "{web/**,output/**,*.pptx,__pycache__/**,**/__pycache__/**}"
+        }
+      }
+    },
+    "frontend": {
+      "root": "web/"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "backend" } },
+    { "source": "/(.*)", "destination": { "service": "frontend" } }
+  ]
+}

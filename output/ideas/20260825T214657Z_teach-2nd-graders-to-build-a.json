@@ -1,0 +1,49 @@
+{
+  "idea": "Teach 2nd graders to build a paper airplane and measure flight distance, one 30-minute session.",
+  "assessment": {
+    "summary": "A 30-minute 2nd-grade paper airplane build-and-measure session is safe, cheap, and age-appropriate, but as written it reads as a single fixed build with one measurement \u2014 it needs a design-variable comparison to create real decision points and productive struggle.",
+    "verdict": "feasible_with_changes",
+    "checks": {
+      "grade_level_fit": {
+        "pass": true,
+        "notes": "Grade band explicitly stated (2nd grade, ~7-8 years old). Folding a simple dart glider, throwing it, and measuring distance with a tape or floor markers is well within 2nd-grade motor and numeracy ability, especially if measurement is scaffolded (whole feet, floor tape marks, or non-standard units like tile counts)."
+      },
+      "materials_feasibility": {
+        "pass": true,
+        "notes": "Requires only copy paper, tape, markers, and a measuring tape or pre-marked floor \u2014 items any afterschool program already has. No sourcing risk."
+      },
+      "instructor_capability": {
+        "pass": true,
+        "notes": "No domain expertise needed. A non-specialist can teach a fold sequence and run a measure-and-record loop with minimal prep; the only prep is practicing the fold and pre-marking a throwing lane."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "Claude can author fold-step visuals/scripts, a 2nd-grade-friendly data recording sheet, guiding questions about lift and drag in plain language, prediction prompts, and a short wrap-up discussion \u2014 plenty of authorable material even though the activity is physical."
+      },
+      "time_scope_fit": {
+        "pass": true,
+        "notes": "Fits a single session, but 30 minutes is tight for 2nd graders: fold instruction alone typically runs 10-12 minutes with hands-on help. Scope must be capped at roughly one fold design plus one modification and about 3 throws each, or the measurement/discussion phase will get cut."
+      },
+      "safety": {
+        "pass": true,
+        "notes": "Minimal risk. Standard mitigations only: designated one-direction throwing lane, no throwing at faces, students stand behind a line while others throw, and no sharp folding tools or paper-edge hazards beyond normal classroom paper handling."
+      },
+      "pedagogical_alignment": {
+        "pass": false,
+        "notes": "As stated, students follow one fold recipe and record one number \u2014 there is no design decision, no variable to test, and no iteration, so there is nothing to struggle productively with. The measurement becomes a demonstration rather than an experiment."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "Is there an open throwing lane of at least ~20-25 feet (hallway, gym, or cleared classroom) available for the session, and can it be pre-marked for measurement?",
+      "What is the expected class size and is there a second adult/volunteer? Fold help for 2nd graders is hands-on and drives whether 30 minutes is realistic.",
+      "Should measurement use standard units (feet/meters with a tape) or non-standard units (floor tiles, footsteps) to match where this group is in their math sequence?"
+    ],
+    "suggested_changes": [
+      "Add one controlled design variable so students make a decision and compare results \u2014 e.g. every student folds the same base plane, then chooses ONE change (add a paperclip nose weight, bend up the wing tips, or widen the wings) and measures before vs. after.",
+      "Structure the session as predict -> throw 3 times -> record -> modify -> re-throw, so students have data to reason about rather than a single number.",
+      "Pre-crease or pre-print fold lines on the paper to reclaim 5+ minutes of instruction time, keeping the 30-minute session viable with the added test-and-compare phase.",
+      "Cap the recording sheet to three throws before and three after, with a simple 'farthest throw' comparison, so data handling stays inside 2nd-grade numeracy."
+    ]
+  }
+}

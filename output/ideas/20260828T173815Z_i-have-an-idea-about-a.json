@@ -1,0 +1,66 @@
+{
+  "idea": "I have an idea about a coding project where I can create a financial planning app. I want it to be generic. I am a 9th grader who has minimal amount of coding skills, but I am willing to learn the right frameworks, stacks, languages, etc. I want you to help create a powerpoint that can get me there (but don't create one yet)",
+  "assessment": {
+    "summary": "[MOCK_MODE] placeholder text -- no API call was made.",
+    "verdict": "needs_more_info",
+    "overall_score": 51,
+    "safety_override": false,
+    "checks": {
+      "pedagogical_alignment": {
+        "score": 73,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 22
+      },
+      "grade_level_fit": {
+        "score": 51,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 20
+      },
+      "materials_feasibility": {
+        "score": 27,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 18
+      },
+      "time_scope_fit": {
+        "score": 83,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "instructor_capability": {
+        "score": 39,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "ai_assistance_value": {
+        "score": 13,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 10
+      },
+      "safety": {
+        "score": 99,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": null
+      }
+    },
+    "blocking_issues": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "open_questions": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "suggested_changes": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "mock": true
+  }
+}

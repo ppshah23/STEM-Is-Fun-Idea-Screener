@@ -1,0 +1,66 @@
+{
+  "idea": "mock test idea",
+  "assessment": {
+    "summary": "[MOCK_MODE] placeholder text -- no API call was made.",
+    "verdict": "not_feasible",
+    "overall_score": 15,
+    "safety_override": true,
+    "checks": {
+      "pedagogical_alignment": {
+        "score": 39,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 22
+      },
+      "grade_level_fit": {
+        "score": 100,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 20
+      },
+      "materials_feasibility": {
+        "score": 98,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 18
+      },
+      "time_scope_fit": {
+        "score": 55,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "instructor_capability": {
+        "score": 61,
+        "pass": true,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 15
+      },
+      "ai_assistance_value": {
+        "score": 8,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": 10
+      },
+      "safety": {
+        "score": 32,
+        "pass": false,
+        "notes": "[MOCK_MODE] placeholder text -- no API call was made.",
+        "weight": null
+      }
+    },
+    "blocking_issues": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "open_questions": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "suggested_changes": [
+      "[MOCK_MODE] placeholder text -- no API call was made.",
+      "[MOCK_MODE] placeholder text -- no API call was made."
+    ],
+    "mock": true
+  }
+}

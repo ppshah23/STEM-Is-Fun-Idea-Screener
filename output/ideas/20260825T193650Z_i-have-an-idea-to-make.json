@@ -1,0 +1,51 @@
+{
+  "idea": "I have an idea to make an irrigation watering embedded system for a plant! Is this something you can make?",
+  "assessment": {
+    "summary": "Building a soil-moisture-triggered plant watering system is a strong, well-trodden embedded-systems project that maps cleanly onto an Arduino-class afterschool unit, but the proposal states nothing about grade band, available hardware, or session count, and water-plus-electronics needs explicit safety framing before authoring.",
+    "verdict": "needs_more_info",
+    "checks": {
+      "grade_level_fit": {
+        "pass": false,
+        "notes": "No age or grade band stated. The project is achievable at multiple levels (upper elementary with pre-wired modules and copy-modify code; middle/high school with sensor calibration, thresholds, and their own control logic), but the authoring target can't be chosen until the prompter names the band. This is the primary blocker."
+      },
+      "materials_feasibility": {
+        "pass": true,
+        "notes": "There is a clear affordable path: Arduino Uno/ESP32, capacitive soil moisture sensor, 5V submersible or peristaltic pump, relay or transistor driver module, tubing, jumper wires, a small reservoir, and a potted plant \u2014 typically well under $25/team and commonly present in existing Arduino kits. Passing on plausibility only; the program's actual inventory (do you already have pumps and moisture sensors, or only base kits?) still needs confirming."
+      },
+      "instructor_capability": {
+        "pass": true,
+        "notes": "A non-specialist instructor can run this with reasonable prep: the electrical work is low-voltage USB/battery powered, and the code is a read-sensor / compare-threshold / switch-output loop. Prep burden is mostly building one working reference rig in advance and knowing how to prime the pump."
+      },
+      "ai_assistance_value": {
+        "pass": true,
+        "notes": "High value for the pipeline. Claude can author the calibration procedure, staged code (read sensor -> print values -> threshold logic -> timed watering), wiring diagrams described in text, debugging flowcharts, data-logging worksheets, and extension challenges such as hysteresis, watering duration limits, or logging moisture over a week."
+      },
+      "time_scope_fit": {
+        "pass": true,
+        "notes": "Naturally fits a 3-4 session unit (session 1: sensor reading and calibration; session 2: pump control; session 3: integration and threshold tuning; session 4: multi-day test and iteration). Prompter did not state a session count, so this should be pinned before authoring, but no scoping problem is apparent."
+      },
+      "safety": {
+        "pass": false,
+        "notes": "Water in direct proximity to powered electronics is the core hazard and no mitigation was proposed. Also unaddressed: pump power source, spill/overflow containment, and the risk of a stuck-on pump flooding a table. Needs an explicit rule set (5V/USB or battery only, absolutely no mains-voltage pumps, trays under all rigs, a hard-coded maximum pump-on duration) before this can run."
+      },
+      "pedagogical_alignment": {
+        "pass": true,
+        "notes": "Strong productive struggle: students must decide what moisture reading counts as 'dry,' how long to water, and how to stop oscillation \u2014 real design decisions with observable feedback rather than a fixed recipe. Multi-day plant survival gives an authentic success criterion."
+      }
+    },
+    "blocking_issues": [],
+    "open_questions": [
+      "What grade or age band is this for? (Drives whether students wire from a diagram vs. from scratch, and whether they write control logic or modify provided code.)",
+      "What hardware do you already have on hand \u2014 specifically soil moisture sensors, 5V pumps, and relay/transistor driver modules \u2014 versus just base Arduino kits?",
+      "How many sessions and how long is each session?",
+      "Is this one shared class rig or one build per team of 2-3 students? (Affects parts count and budget.)",
+      "Will the plants live at the site between sessions so students can observe multi-day watering results, or does everything get packed up each week?"
+    ],
+    "suggested_changes": [
+      "State the target grade band so the course can be authored at the right level of code and wiring independence.",
+      "Confirm the specific parts list against current inventory and name what needs ordering.",
+      "Add an explicit safety envelope to the idea: 5V USB or battery-powered pumps only (no mains-voltage pumps), drip trays under every rig, and a code-enforced maximum pump-on time so a stuck sensor reading can't flood the table.",
+      "Specify the number and length of sessions so the unit can be split into calibration, actuation, and integration milestones."
+    ]
+  }
+}
