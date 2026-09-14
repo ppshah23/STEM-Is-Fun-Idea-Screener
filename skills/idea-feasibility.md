@@ -72,6 +72,24 @@ Be specific enough that the prompter can act without a follow-up
 conversation — name the exact missing fact or the exact blocking
 constraint, don't just say "unclear" or "too advanced."
 
+## Sourcing parts for physical builds
+
+If the idea involves building a physical device or apparatus (electronics,
+robotics, a physical rig or tool — anything beyond pure software or
+worksheets), use web search to find 2–5 real, currently-purchasable parts
+that would work for it. Prefer affordable, commonly-stocked retailers
+(Amazon, Adafruit, SparkFun, Digi-Key, Micro Center, eBay) over obscure or
+industrial suppliers, and favor options that fit an afterschool program's
+budget. For each part, give its real product name, a real product URL from
+the search results, and a short note (approximate price, and why this part
+fits). Let this inform your `materials_feasibility` score and notes too —
+don't score materials feasibility blind and then separately bolt on parts
+that don't match your own reasoning.
+
+If the idea is purely conceptual, software-only, or otherwise has no
+physical build component, return an empty `suggested_parts` list — don't
+force parts onto an idea that doesn't need any.
+
 ## Output shape
 
 Return a single JSON object:
@@ -90,6 +108,9 @@ Return a single JSON object:
   },
   "blocking_issues": ["specific, actionable blocker from a low-scoring dimension, empty if none"],
   "open_questions": ["specific fact needed from the prompter, empty if none"],
-  "suggested_changes": ["specific, actionable change that would raise a low-scoring dimension, empty if everything scores high"]
+  "suggested_changes": ["specific, actionable change that would raise a low-scoring dimension, empty if everything scores high"],
+  "suggested_parts": [
+    {"name": "real product name", "url": "real product URL from search", "note": "approx. price and why it fits, empty list if no physical build"}
+  ]
 }
 ```

@@ -1,4 +1,3 @@
-import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -6,19 +5,39 @@ from pathlib import Path
 from . import io, steps
 
 
-def _slug(idea_text: str) -> str:
-    words = re.findall(r"[a-z0-9]+", idea_text.lower())[:6]
-    return "-".join(words) or "idea"
-
-
 def screen_idea(idea_text: str) -> tuple[dict, Path]:
     """Assess a raw idea and save the assessment. Shared by the CLI and the web API."""
     assessment = steps.assess_idea_feasibility(idea_text)
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"{timestamp}_{_slug(idea_text)}"
+    name = f"{timestamp}_{io.slugify(idea_text)}"
     path = io.save_idea_assessment(name, {"idea": idea_text, "assessment": assessment})
     return assessment, path
+
+
+def classify_level(idea_text: str) -> tuple[dict, Path]:
+    """Classify which of the 3 levels this prompter message falls into.
+    Shared by the CLI and the web API. Kept separate from screen_idea --
+    feasibility scoring doesn't apply to Level 3 (review) input."""
+    classification = steps.classify_idea_level(idea_text)
+
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    name = f"{timestamp}_{io.slugify(idea_text)}"
+    path = io.save_level_classification(name, {"idea": idea_text, "classification": classification})
+    return classification, path
+
+
+def review_curriculum(curriculum_text: str, constraints: str | None = None) -> tuple[dict, Path]:
+    """Level-3 flow: feedback on an already-completed curriculum/project.
+    Shared by the CLI and the web API."""
+    review = steps.review_curriculum(curriculum_text, constraints)
+
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    name = f"{timestamp}_{io.slugify(curriculum_text)}"
+    path = io.save_curriculum_review(
+        name, {"curriculum": curriculum_text, "constraints": constraints, "review": review}
+    )
+    return review, path
 
 
 def screen(idea_text: str) -> Path:

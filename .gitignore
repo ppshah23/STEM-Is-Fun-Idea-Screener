@@ -16,3 +16,13 @@ out/
 *.tsbuildinfo
 .vercel
 
+# Generated pipeline output (ideas/roadmaps/levels/reviews) - keep folders, not contents
+output/ideas/*
+!output/ideas/.gitkeep
+output/levels/*
+!output/levels/.gitkeep
+output/reviews/*
+!output/reviews/.gitkeep
+output/roadmaps/*
+!output/roadmaps/.gitkeep
+
