@@ -20,6 +20,60 @@ pip install -r requirements.txt
 Requires Claude API credentials — either set `ANTHROPIC_API_KEY`, or run
 `ant auth login` if you have the Anthropic CLI.
 
+## Directory structure
+
+```
+AI Command Center/
+├── app.py                  # Streamlit-style entry point for the idea intake UI
+├── requirements.txt
+├── AI_Command_Center.pptx  # architectural pitch this scaffold implements
+├── data/
+│   ├── assets/
+│   ├── courses/            # course JSON, authored once an idea clears intake
+│   │   └── arduino-digital-io.json
+│   └── personas/           # student/instructor persona JSON
+│       └── middle-school-beginner.json
+├── output/
+│   ├── ideas/              # feasibility verdicts from pipeline.intake (generated, gitignored)
+│   ├── levels/             # level classifications from pipeline.level_matrix (generated, gitignored)
+│   ├── reviews/            # curriculum reviews (generated, gitignored)
+│   ├── roadmaps/           # day-by-day roadmap previews from pipeline.roadmap (generated, gitignored)
+│   ├── drafts/             # orchestrator run output, pending review
+│   └── approved/           # drafts a human has approved
+├── pipeline/
+│   ├── agent.py            # the one function that calls Claude (run_skill)
+│   ├── intake.py           # feasibility gate
+│   ├── io.py                # deterministic load/save/export
+│   ├── level_matrix.py     # grade/skill level classification
+│   ├── orchestrator.py     # the fixed pipeline: analyze -> ... -> save draft
+│   ├── roadmap.py          # day-by-day roadmap preview
+│   ├── schemas.py          # Pydantic schemas for pipeline step output
+│   ├── scoring.py
+│   ├── skills.py
+│   └── steps.py            # one function per agentic step
+├── skills/                 # expert playbooks (Markdown) loaded as system-prompt context
+│   ├── curriculum-analysis.md
+│   ├── curriculum-evaluation.md
+│   ├── curriculum-interview.md
+│   ├── curriculum-review.md
+│   ├── curriculum-roadmap.md
+│   ├── grade-level-adaptation.md
+│   ├── idea-feasibility.md
+│   ├── idea-level-classification.md
+│   ├── instructor-pedagogy.md
+│   ├── lesson-planning.md
+│   ├── slide-storytelling.md
+│   └── worksheet-generation.md
+├── tests/
+│   └── test_level_matrix.py
+└── web/                    # Next.js frontend for the Idea Screener
+    ├── app/
+    │   ├── globals.css
+    │   ├── layout.tsx
+    │   └── page.tsx
+    └── public/
+```
+
 ## Layout
 
 - `skills/` — expert playbooks (Markdown) that get loaded as system-prompt
