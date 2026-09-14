@@ -1,4 +1,4 @@
-# AI Command Center — Curriculum Pipeline Scaffold
+# AI Idea Screener — Curriculum Pipeline Scaffold
 
 An AI-assisted curriculum pipeline for STEM is FUN that evaluates raw project
 ideas for feasibility, then drafts a classroom-ready lesson plan for those
