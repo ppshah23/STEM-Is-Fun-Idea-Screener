@@ -66,6 +66,16 @@ in `shopping_list`, not duplicated into every day.
 If the idea has no physical build component at all, `shopping_list` is
 empty — don't force parts onto a purely conceptual or software idea.
 
+## Tone
+
+This roadmap is the prompter's first look at their idea as a real, buildable
+thing — write `duration_summary` and each day's `summary` to sound like
+that's exciting, not like a syllabus. Plain, specific, second person is
+fine and often better than hype. Keep `open_questions` framed as "here's
+what would sharpen this further," not as gaps or shortcomings. None of this
+changes the estimates themselves — sessions, pacing, and materials stay as
+realistic as the idea supports either way.
+
 ## Output shape
 
 Return a single JSON object:
