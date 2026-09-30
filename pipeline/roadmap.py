@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 from . import io, steps
@@ -10,9 +9,7 @@ def draft_roadmap(idea_text: str, feasibility_notes: dict | None = None) -> tupl
     Shared by the CLI and any future caller (e.g. chained after pipeline.intake)."""
     roadmap = steps.draft_curriculum_roadmap(idea_text, feasibility_notes)
 
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"{timestamp}_{io.slugify(idea_text)}"
-    path = io.save_roadmap(name, idea_text, roadmap)
+    path = io.save_roadmap(io.timestamped_name(idea_text), idea_text, roadmap)
     return roadmap, path
 
 

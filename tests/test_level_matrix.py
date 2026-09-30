@@ -9,12 +9,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from pipeline.level_matrix import classify_level  # noqa: E402
+from pipeline.schemas import LEVEL_SIGNAL_DIMENSIONS  # noqa: E402
 
 
 def _signals(**overrides) -> dict:
     """All 5 signals default to 50 (dead zone) unless overridden."""
-    dims = ["existing_artifact", "relevant_experience", "goal_clarity", "decision_ownership", "guidance_request"]
-    return {dim: {"score": overrides.get(dim, 50), "notes": "test"} for dim in dims}
+    return {
+        dim: {"score": overrides.get(dim, 50), "notes": "test"}
+        for dim in LEVEL_SIGNAL_DIMENSIONS
+    }
 
 
 def test_all_dead_zone_falls_back_to_datum():

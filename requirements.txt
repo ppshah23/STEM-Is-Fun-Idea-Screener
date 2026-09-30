@@ -3,3 +3,9 @@ python-pptx
 python-docx
 fastapi
 python-dotenv
+psycopg2-binary  # db/ -- Postgres mirror of output/ for querying/reporting
+
+# curriculum_developer_tool_v2's engine (Sp/S0-S3 pipeline), installed editable
+# from a sibling checkout so pipeline/orchestrator_v2.py can `import curriculum_engine`
+# directly. Requires curriculum_developer_tool_v2 checked out next to STEM-Is-Fun-V2/.
+-e ../../curriculum_developer_tool_v2

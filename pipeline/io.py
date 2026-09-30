@@ -1,6 +1,7 @@
 import json
 import re
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent.parent
@@ -13,36 +14,40 @@ def slugify(text: str) -> str:
     return "-".join(words) or "idea"
 
 
+def timestamped_name(text: str) -> str:
+    """Output filename stem: UTC timestamp + slug, e.g. 20260101T000000Z_build-a-robot."""
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return f"{timestamp}_{slugify(text)}"
+
+
 def load_course(course_id: str) -> dict:
-    return json.loads((DATA_DIR / "courses" / f"{course_id}.json").read_text())
+    return json.loads((DATA_DIR / "courses" / f"{course_id}.json").read_text(encoding="utf-8"))
 
 
 def load_persona(persona_id: str) -> dict:
-    return json.loads((DATA_DIR / "personas" / f"{persona_id}.json").read_text())
+    return json.loads((DATA_DIR / "personas" / f"{persona_id}.json").read_text(encoding="utf-8"))
+
+
+def _save_json(subdir: str, name: str, payload: dict) -> Path:
+    path = OUTPUT_DIR / subdir / f"{name}.json"
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return path
 
 
 def save_draft(name: str, payload: dict) -> Path:
-    path = OUTPUT_DIR / "drafts" / f"{name}.json"
-    path.write_text(json.dumps(payload, indent=2))
-    return path
+    return _save_json("drafts", name, payload)
 
 
 def save_idea_assessment(name: str, payload: dict) -> Path:
-    path = OUTPUT_DIR / "ideas" / f"{name}.json"
-    path.write_text(json.dumps(payload, indent=2))
-    return path
+    return _save_json("ideas", name, payload)
 
 
 def save_level_classification(name: str, payload: dict) -> Path:
-    path = OUTPUT_DIR / "levels" / f"{name}.json"
-    path.write_text(json.dumps(payload, indent=2))
-    return path
+    return _save_json("levels", name, payload)
 
 
 def save_curriculum_review(name: str, payload: dict) -> Path:
-    path = OUTPUT_DIR / "reviews" / f"{name}.json"
-    path.write_text(json.dumps(payload, indent=2))
-    return path
+    return _save_json("reviews", name, payload)
 
 
 def render_roadmap_markdown(idea_text: str, roadmap: dict) -> str:
@@ -92,8 +97,10 @@ def save_roadmap(name: str, idea_text: str, roadmap: dict) -> Path:
     rendered Markdown (the actual prompter-facing deliverable)."""
     json_path = OUTPUT_DIR / "roadmaps" / f"{name}.json"
     md_path = OUTPUT_DIR / "roadmaps" / f"{name}.md"
-    json_path.write_text(json.dumps({"idea": idea_text, "roadmap": roadmap}, indent=2))
-    md_path.write_text(render_roadmap_markdown(idea_text, roadmap))
+    json_path.write_text(
+        json.dumps({"idea": idea_text, "roadmap": roadmap}, indent=2), encoding="utf-8"
+    )
+    md_path.write_text(render_roadmap_markdown(idea_text, roadmap), encoding="utf-8")
     return md_path
 
 

@@ -138,3 +138,74 @@ for it to load.
 3. Decide on and add Pydantic schemas for `run_skill`'s output per step, so
    each step's JSON is validated instead of loosely parsed.
 4. Wire up `export_pptx` / `export_worksheet` in `pipeline/io.py`.
+
+## Alternate pipeline: curriculum_developer_tool_v2 bridge
+
+`pipeline/orchestrator_v2.py` and `pipeline/v2_bridge.py` are a **second,
+parallel path** into `curriculum_developer_tool_v2`'s engine (its Sp/S0-S3
+pipeline: domain/progression plan -> lesson architecture -> lesson content,
+each with schema-validated output and its own human-approval gate). They are
+additive: `pipeline/orchestrator.py`, `steps.py`, and the original
+analyze/adapt/plan/outline/evaluate chain are unchanged and still work as
+before. Use whichever pipeline fits a given course.
+
+**Setup** (one-time): requires `curriculum_developer_tool_v2` checked out as
+a sibling of `STEM-Is-Fun-V2/` (i.e. both under the same parent folder), then:
+
+```
+pip install -r requirements.txt   # includes an editable install of v2's engine
+```
+
+If the two repos aren't siblings, point at v2 explicitly instead:
+`CURRICULUM_V2_ROOT=/path/to/curriculum_developer_tool_v2`.
+
+**Running without an API key** (default `fake` provider): S1 has a
+seeded fixture from `create-project`, but S2/S3 need one derived first via
+`seed-fixture` (no LLM call -- uses v2's own fixture-derivation logic):
+
+```
+python -m pipeline.orchestrator_v2 create-project my_fan --title "Smart Personal Fan" \
+  --product-line explorer --domains arduino,electronics
+
+python -m pipeline.orchestrator_v2 run-skill S1 --project my_fan
+python -m pipeline.orchestrator_v2 approve-run --project my_fan <S1_run_id>
+
+python -m pipeline.orchestrator_v2 seed-fixture S2 --project my_fan
+python -m pipeline.orchestrator_v2 run-skill S2 --project my_fan
+python -m pipeline.orchestrator_v2 approve-run --project my_fan <S2_run_id>
+
+python -m pipeline.orchestrator_v2 seed-fixture S3 --project my_fan --lesson lesson1
+python -m pipeline.orchestrator_v2 run-skill S3 --project my_fan --lesson lesson1
+python -m pipeline.orchestrator_v2 approve-run --project my_fan <S3_run_id>
+
+python -m pipeline.orchestrator_v2 list-runs --project my_fan
+```
+
+(Lesson ids come from `content/projects/<project>/lessons_index.md`, written
+once S2 is approved -- `lesson1`, `lesson2`, etc.)
+
+**Running live**, once an idea has cleared `pipeline.intake` and/or
+`pipeline.roadmap`: swap `--provider anthropic` onto each `run-skill` call
+(no `seed-fixture` step needed), and optionally seed the project straight
+from a saved roadmap instead of `--title`:
+
+```
+python -m pipeline.orchestrator_v2 create-project my_fan \
+  --from-roadmap 20260101T000000Z_smart-fan \
+  --product-line explorer --domains arduino,electronics
+
+python -m pipeline.orchestrator_v2 run-skill S1 --project my_fan --provider anthropic
+python -m pipeline.orchestrator_v2 approve-run --project my_fan <S1_run_id>
+python -m pipeline.orchestrator_v2 run-skill S2 --project my_fan --provider anthropic
+python -m pipeline.orchestrator_v2 approve-run --project my_fan <S2_run_id>
+python -m pipeline.orchestrator_v2 run-skill S3 --project my_fan --lesson <lesson_id> --provider anthropic
+python -m pipeline.orchestrator_v2 approve-run --project my_fan <S3_run_id>
+```
+
+Live generation needs `ANTHROPIC_API_KEY` set in the **v2 checkout's** own
+`.env` (v2's engine loads its own `.env`, independent of this project's).
+
+Projects and runs created this way live inside the v2 checkout's own
+`content/projects/` and `runs/` folders (both gitignored there), so running
+this never touches this repo's `data/` or `output/`, and never touches v2's
+tracked files either.

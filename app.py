@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -17,11 +15,7 @@ app.add_middleware(
 )
 
 
-class ScreenRequest(BaseModel):
-    idea: str
-
-
-class ClassifyRequest(BaseModel):
+class IdeaRequest(BaseModel):
     idea: str
 
 
@@ -42,13 +36,13 @@ class InterviewRequest(BaseModel):
 
 
 @app.post("/api/screen-idea")
-def screen_idea_endpoint(req: ScreenRequest) -> dict:
+def screen_idea_endpoint(req: IdeaRequest) -> dict:
     assessment, _ = screen_idea(req.idea)
     return assessment
 
 
 @app.post("/api/classify-level")
-def classify_level_endpoint(req: ClassifyRequest) -> dict:
+def classify_level_endpoint(req: IdeaRequest) -> dict:
     classification, _ = classify_level(req.idea)
     return classification
 
@@ -71,8 +65,7 @@ def generate_roadmap_endpoint(req: InterviewRequest) -> dict:
     enriched_idea = steps.enrich_idea_with_interview(req.idea, transcript)
     roadmap = steps.draft_curriculum_roadmap(enriched_idea, level=req.level)
 
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    name = f"{timestamp}_{io.slugify(req.idea)}"
-    io.save_roadmap(name, req.idea, roadmap)
+    # Saved under the original idea, not the interview-enriched text.
+    io.save_roadmap(io.timestamped_name(req.idea), req.idea, roadmap)
 
     return roadmap
